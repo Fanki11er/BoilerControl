@@ -1,24 +1,34 @@
 import { BoilerStatus, PanelOptions } from "../../Types/types";
+import { BoilerSettings } from "../BoilerSettings/BoilerSettings";
 
 export class Boiler {
 	private id;
-	private currentTemperature = 16;
+	private currentTemperature: number;
 	private currentFanSpeed = 0;
 	private currentFuelLevel = 100;
 	private alarm = "";
-	private currentOutsideTemperature = 5;
+	private currentOutsideTemperature: number;
 	private currentFuelStream = 0;
 	private currentStatus: BoilerStatus = "Stopped";
 	private counter = 0;
 	private fuelUsed = 0;
 
+	boilerSettings: BoilerSettings;
+
 	constructor(id: string) {
 		this.id = id;
+		this.currentOutsideTemperature = this.setOutsideTemperature();
+		this.currentTemperature = this.currentOutsideTemperature + 10;
+		this.boilerSettings = new BoilerSettings();
 
 		setInterval(() => {
 			this.updateCounter();
 			this.update();
 		}, 1000);
+	}
+
+	private setOutsideTemperature() {
+		return Math.floor(Math.random() * 30) * Math.random() < 0.5 ? -1 : 1;
 	}
 
 	getId() {
@@ -47,12 +57,13 @@ export class Boiler {
 
 	startBoiler() {
 		this.currentStatus = "Working";
-		this.currentFanSpeed = 100;
+		this.currentFanSpeed = this.boilerSettings.advancedSettings.fanSpeed;
 	}
 
 	stopBoiler() {
 		this.currentStatus = "Stopped";
 		this.currentFanSpeed = 0;
+		this.currentFuelStream = 0;
 	}
 
 	private updateCounter() {
@@ -74,7 +85,7 @@ export class Boiler {
 				break;
 			}
 			case "Idle": {
-				this.breakUpdate();
+				this.superviseUpdate();
 				break;
 			}
 			default: {
@@ -105,21 +116,41 @@ export class Boiler {
 		}
 	}
 
-	private breakUpdate() {}
+	private superviseUpdate() {
+		const { fanSpeedInSupervision, supervisionWaitingTime } =
+			this.boilerSettings.advancedSettings;
+		const { desiredTemperature, boilerHysteresis } =
+			this.boilerSettings.userSettings;
+		if (this.counter % supervisionWaitingTime === 0) {
+			this.currentFanSpeed = fanSpeedInSupervision;
+		}
+		if ((this.counter % supervisionWaitingTime) + 5 === 0) {
+			this.currentFanSpeed = 0;
+		}
+		if (this.currentTemperature < desiredTemperature - boilerHysteresis) {
+			this.currentStatus = "Working";
+		}
+		if (this.counter % this.figureSpeedOfTempFalling() === 0) {
+			this.currentTemperature -= 1;
+		}
+	}
 	private workingUpdate() {
-		if (this.currentTemperature < 70) {
+		const { fuelBreakTime, fuelStream, fuelStreamTime } =
+			this.boilerSettings.advancedSettings;
+		const { desiredTemperature } = this.boilerSettings.userSettings;
+		if (this.currentTemperature < desiredTemperature) {
 			if (this.counter % this.figureSpeedOfTempFalling() === 0) {
 				this.currentTemperature += 1;
 			}
-			if (this.counter % 30 === 0) {
-				this.currentFuelStream = 15;
-				this.fuelUsed += 5;
+			if (this.counter % fuelBreakTime === 0) {
+				this.currentFuelStream = fuelStream;
+				this.fuelUsed += fuelStream / (fuelStreamTime / 10);
 			}
-			if (this.counter % 40 === 0) {
+			if (this.counter % (fuelBreakTime + fuelStreamTime) === 0) {
 				this.currentFuelStream = 0;
 			}
 
-			if (this.fuelUsed === 20) {
+			if (this.fuelUsed >= 15) {
 				this.fuelUsed = 0;
 				this.currentFuelLevel -= 1;
 			}

@@ -1,4 +1,5 @@
 import { BoilerStatus, PanelOptions } from "../../Types/types";
+import { BoilerSettings } from "../BoilerSettings/BoilerSettings";
 export declare class Boiler {
     private id;
     private currentTemperature;
@@ -10,7 +11,9 @@ export declare class Boiler {
     private currentStatus;
     private counter;
     private fuelUsed;
+    boilerSettings: BoilerSettings;
     constructor(id: string);
+    private setOutsideTemperature;
     getId(): string;
     getAlarm(): string;
     getBoilerInfo(): BoilerInfo;
@@ -21,7 +24,7 @@ export declare class Boiler {
     private update;
     private figureSpeedOfTempFalling;
     private stopUpdate;
-    private breakUpdate;
+    private superviseUpdate;
     private workingUpdate;
     getBoilerParameters(): BoilerInfo;
     changeStatus(status: PanelOptions): void;
