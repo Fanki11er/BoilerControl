@@ -1,21 +1,42 @@
-import * as React from "react";
-import type { FC } from "react";
-import { Box, Text } from "ink";
+import React from "react";
+import { Box, Text, useFocus, useInput } from "ink";
 
 export interface Props {
-	isSelected?: boolean;
 	label: string;
+	callback: () => void;
 }
 
-const ButtonItem: FC<Props> = ({ isSelected = false, label }) => (
-	<Box borderColor={isSelected ? "green" : "gray"} padding={2} marginRight={5}>
-		<Text
-			color={isSelected ? "blue" : undefined}
-			backgroundColor={isSelected ? "green" : "gray"}
+const ButtonItem = (props: Props) => {
+	const { callback, label } = props;
+	const { isFocused } = useFocus();
+	useInput((input, key) => {
+		input;
+
+		if (isFocused && key.return) {
+			callback();
+		}
+	});
+
+	return (
+		<Box
+			borderColor={isFocused ? "blue" : "white"}
+			borderStyle={"round"}
+			width={10}
+			height={3}
+			alignItems={"center"}
+			alignSelf={"flex-end"}
+			justifyContent={"center"}
+			marginLeft={5}
 		>
-			{` ${label} `}
-		</Text>
-	</Box>
-);
+			<Text
+				color={isFocused ? "blue" : undefined}
+				underline={isFocused ? true : false}
+				bold={true}
+			>
+				{` ${label} `}
+			</Text>
+		</Box>
+	);
+};
 
 export default ButtonItem;

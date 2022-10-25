@@ -1,7 +1,6 @@
-import type { FC } from "react";
 export interface Props {
-    isSelected?: boolean;
     label: string;
+    callback: () => void;
 }
-declare const ButtonItem: FC<Props>;
+declare const ButtonItem: (props: Props) => JSX.Element;
 export default ButtonItem;

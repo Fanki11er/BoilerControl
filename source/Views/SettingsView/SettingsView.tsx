@@ -1,5 +1,7 @@
+import { Box, Text } from "ink";
 import { Form } from "ink-form";
 import React, { useContext } from "react";
+import ButtonItem from "../../Components/ButtonItem/ButtonItem";
 import { BoilerContext } from "../../Providers/BoilerProvider/BoilerProvider";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 
@@ -23,104 +25,116 @@ const SettingsView = (props: Props) => {
 		supervisionWaitingTime,
 	} = currentSettings.advancedSettings;
 
+	const backToBoilerInfo = () => {
+		handleChangeRoute("/BoilerInfo", id);
+	};
+
 	//!!Add function for searching boiler by Id or sending request with Id
 	return (
-		<Form
-			onSubmit={(value) => {
-				handleSettingsChange(value);
-				handleChangeRoute("/BoilerInfo", id);
-			}}
-			form={{
-				title: "Settings",
-				sections: [
-					{
-						title: "UserSettings",
-						fields: [
-							{
-								type: "integer",
-								name: "desiredTemperature",
-								label: "Desired temperature",
-								min: 40,
-								max: 85,
-								initialValue: desiredTemperature,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "hysteresis",
-								label: "Hysteresis",
-								min: 2,
-								max: 10,
-								initialValue: boilerHysteresis,
-								required: true,
-							},
-						],
-					},
-					{
-						title: "Advanced settings",
-						fields: [
-							{
-								type: "integer",
-								name: "fanSpeed",
-								label: "Fan speed",
-								min: 30,
-								max: 100,
-								initialValue: fanSpeed,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "fanSpeedInSupervision",
-								label: "Fan Speed In Supervision",
-								min: 0,
-								max: 50,
-								initialValue: fanSpeedInSupervision,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "supervisionWaitingTime",
-								label: "Supervision Waiting Time",
-								min: 30,
-								max: 120,
-								initialValue: supervisionWaitingTime,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "fuelStream",
-								label: "Fuel Stream",
-								min: 2,
-								max: 50,
-								initialValue: fuelStream,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "fuelBreakTime",
-								label: "Fuel Break Time",
-								min: 5,
-								max: 50,
-								initialValue: fuelBreakTime,
-								required: true,
-							},
-							{
-								type: "integer",
-								name: "fuelStreamTime",
-								label: "Fuel Stream Time",
-								min: 5,
-								max: 50,
-								initialValue: fuelStreamTime,
-								required: true,
-							},
-						],
-					},
-				],
-			}}
-		/>
+		<>
+			<Form
+				onSubmit={(value) => {
+					handleSettingsChange(value);
+					handleChangeRoute("/BoilerInfo", id);
+				}}
+				form={{
+					title: "Settings",
+					sections: [
+						{
+							title: "UserSettings",
+							fields: [
+								{
+									type: "integer",
+									name: "desiredTemperature",
+									label: "Desired temperature",
+									min: 40,
+									max: 85,
+									initialValue: desiredTemperature,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "hysteresis",
+									label: "Hysteresis",
+									min: 2,
+									max: 10,
+									initialValue: boilerHysteresis,
+									required: true,
+								},
+							],
+						},
+						{
+							title: "Advanced settings",
+							fields: [
+								{
+									type: "integer",
+									name: "fanSpeed",
+									label: "Fan speed",
+									min: 30,
+									max: 100,
+									initialValue: fanSpeed,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "fanSpeedInSupervision",
+									label: "Fan Speed In Supervision",
+									min: 0,
+									max: 50,
+									initialValue: fanSpeedInSupervision,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "supervisionWaitingTime",
+									label: "Supervision Waiting Time",
+									min: 30,
+									max: 120,
+									initialValue: supervisionWaitingTime,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "fuelStream",
+									label: "Fuel Stream",
+									min: 2,
+									max: 50,
+									initialValue: fuelStream,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "fuelBreakTime",
+									label: "Fuel Break Time",
+									min: 5,
+									max: 50,
+									initialValue: fuelBreakTime,
+									required: true,
+								},
+								{
+									type: "integer",
+									name: "fuelStreamTime",
+									label: "Fuel Stream Time",
+									min: 5,
+									max: 50,
+									initialValue: fuelStreamTime,
+									required: true,
+								},
+							],
+						},
+					],
+				}}
+			/>
+			<Box
+				alignSelf={"flex-end"}
+				justifyContent={"center"}
+				alignItems={"center"}
+			>
+				<Text>Push enter for return.</Text>
+				<ButtonItem label={"Return"} callback={backToBoilerInfo} />
+			</Box>
+		</>
 	);
 };
 
 export default SettingsView;
-
-//);
