@@ -27,12 +27,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const BoilerInfoView_1 = __importDefault(require("./Components/BoilerInfoView/BoilerInfoView"));
-const LoginForm_1 = __importDefault(require("./Components/LoginForm/LoginForm"));
-const MainPage_1 = __importDefault(require("./Components/MainPage/MainPage"));
-//import LoginForm from "./Components/LoginForm/LoginForm";
-const RegisterForm_1 = __importDefault(require("./Components/RegisterForm/RegisterForm"));
+const BoilerInfoView_1 = __importDefault(require("./Views/BoilerInfoView/BoilerInfoView"));
+const MainPage_1 = __importDefault(require("./Views/MainPage/MainPage"));
 const RoutesProvider_1 = require("./Providers/RoutesProvider/RoutesProvider");
+const LoginForm_1 = __importDefault(require("./Views/LoginForm/LoginForm"));
+const RegisterForm_1 = __importDefault(require("./Views/RegisterForm/RegisterForm"));
 const App = () => {
     const { currentRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const switchComponents = (0, react_1.useCallback)((currentRoute) => {

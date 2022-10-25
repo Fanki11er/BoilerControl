@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Box, Text } from "ink";
-import BoilerInfo from "../BoilerInfo/BoilerInfo";
+import BoilerInfo from "../../Components/BoilerInfo/BoilerInfo";
 import { BoilerContext } from "../../Providers/BoilerProvider/BoilerProvider";
-import BoilerStatusInfo from "../BoilerStatusInfo/BoilerStatusInfo";
-import BoilerAlarmInfo from "../BoilerAlarmInfo/BoilerAlarmInfo";
-import BoilerControlPanel from "../BoilerControlsPanel/BoilerControlsPanel";
+import BoilerStatusInfo from "../../Components/BoilerStatusInfo/BoilerStatusInfo";
+import BoilerAlarmInfo from "../../Components/BoilerAlarmInfo/BoilerAlarmInfo";
+import BoilerControlPanel from "../../Components/BoilerControlsPanel/BoilerControlsPanel";
 
 type Props = {
 	id: string;

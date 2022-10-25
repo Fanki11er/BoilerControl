@@ -2,8 +2,8 @@ import SelectInput, { Item } from "ink-select-input/build/SelectInput";
 import React, { useContext } from "react";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
-import Indicator from "../Indicator/Indicator";
-import ListItem from "../ListItem/ListItem";
+import Indicator from "../../Components/Indicator/Indicator";
+import ListItem from "../../Components/ListItem/ListItem";
 import { items } from "../../FakeData/fakeData";
 import { Box, Text } from "ink";
 

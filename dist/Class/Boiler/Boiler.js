@@ -109,6 +109,7 @@ class Boiler {
     stopBoiler() {
         this.currentStatus = "Stopped";
         this.currentFanSpeed = 0;
+        this.currentFuelStream = 0;
     }
     updateCounter() {
         if (this.counter <= 260) {
@@ -187,7 +188,7 @@ class Boiler {
             if (this.counter % (fuelBreakTime + fuelStreamTime) === 0) {
                 this.currentFuelStream = 0;
             }
-            if (this.fuelUsed === 20) {
+            if (this.fuelUsed >= 15) {
                 this.fuelUsed = 0;
                 this.currentFuelLevel -= 1;
             }

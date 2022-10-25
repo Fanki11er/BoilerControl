@@ -1,11 +1,12 @@
 import React, { useCallback, useContext } from "react";
-import BoilerInfoView from "./Components/BoilerInfoView/BoilerInfoView";
-import LoginForm from "./Components/LoginForm/LoginForm";
-import MainPage from "./Components/MainPage/MainPage";
-//import LoginForm from "./Components/LoginForm/LoginForm";
-import RegisterForm from "./Components/RegisterForm/RegisterForm";
+import BoilerInfoView from "./Views/BoilerInfoView/BoilerInfoView";
+
+import MainPage from "./Views/MainPage/MainPage";
+
 import { RoutesContext } from "./Providers/RoutesProvider/RoutesProvider";
 import { Route } from "./Types/types";
+import LoginForm from "./Views/LoginForm/LoginForm";
+import RegisterForm from "./Views/RegisterForm/RegisterForm";
 
 const App = () => {
 	const { currentRoute } = useContext(RoutesContext);
