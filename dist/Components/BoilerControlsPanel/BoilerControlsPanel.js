@@ -32,7 +32,7 @@ const SelectInput_1 = __importDefault(require("ink-select-input/build/SelectInpu
 const BoilerProvider_1 = require("../../Providers/BoilerProvider/BoilerProvider");
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const BoilerControlPanel = (props) => {
-    const { boilerStatus } = props;
+    const { boilerStatus, id } = props;
     const { handleBoilerControl } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const options = [
@@ -64,7 +64,7 @@ const BoilerControlPanel = (props) => {
                 break;
             }
             case "SETTINGS": {
-                console.log("Set");
+                handleChangeRoute("/Settings", id);
                 break;
             }
             default: {

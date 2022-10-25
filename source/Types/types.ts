@@ -1,4 +1,10 @@
-export type Routes = "/" | "/Login" | "/Register" | "/Main" | "/BoilerInfo";
+export type Routes =
+	| "/"
+	| "/Login"
+	| "/Register"
+	| "/Main"
+	| "/BoilerInfo"
+	| "/Settings";
 
 export type Route = {
 	currentRoute: Routes;

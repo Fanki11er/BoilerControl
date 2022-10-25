@@ -7,6 +7,7 @@ import React, {
 	useState,
 } from "react";
 import { Boiler, BoilerInfo } from "../../Class/Boiler/Boiler";
+import { BoilerSettings } from "../../Class/BoilerSettings/BoilerSettings";
 import { PanelOptions } from "../../Types/types";
 
 export const BoilerContext = createContext({
@@ -16,6 +17,9 @@ export const BoilerContext = createContext({
 	},
 	handleSettingsChange: (settings: any) => {
 		settings;
+	},
+	handleGetBoilerSettings: (): BoilerSettings => {
+		return {} as BoilerSettings;
 	},
 });
 
@@ -35,8 +39,11 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	}, []);
 
 	const handleSettingsChange = useCallback((settings: any) => {
-		//!!!!!!!!!!!
-		console.log(settings);
+		boiler.setBoilerSettings(settings);
+	}, []);
+
+	const handleGetBoilerSettings = useCallback(() => {
+		return boiler.getBoilerSettings();
 	}, []);
 
 	useEffect(() => {
@@ -49,6 +56,7 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		boilerParameters,
 		handleSettingsChange,
 		handleBoilerControl,
+		handleGetBoilerSettings,
 	};
 
 	return (

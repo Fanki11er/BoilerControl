@@ -11,12 +11,14 @@ export declare class Boiler {
     private currentStatus;
     private counter;
     private fuelUsed;
-    boilerSettings: BoilerSettings;
+    private boilerSettings;
     constructor(id: string);
     private setOutsideTemperature;
     getId(): string;
     getAlarm(): string;
     getBoilerInfo(): BoilerInfo;
+    getBoilerSettings(): BoilerSettings;
+    setBoilerSettings(settings: BoilerSettings): void;
     setFuelLevel(newFuelLevel: number): void;
     startBoiler(): void;
     stopBoiler(): void;

@@ -35,7 +35,7 @@ const BoilerAlarmInfo_1 = __importDefault(require("../../Components/BoilerAlarmI
 const BoilerControlsPanel_1 = __importDefault(require("../../Components/BoilerControlsPanel/BoilerControlsPanel"));
 const BoilerInfoView = (props) => {
     const { boilerParameters } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
-    const {} = props;
+    const { id } = props;
     return (react_1.default.createElement(ink_1.Box, { width: 120, height: 30, padding: 2, borderStyle: "round", minWidth: 120, flexDirection: "column" }, boilerParameters ? (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(ink_1.Box, null,
             react_1.default.createElement(react_1.default.Fragment, null,
@@ -48,6 +48,6 @@ const BoilerInfoView = (props) => {
                 react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelStream, label: "Fuel stream (Kg/h)" }),
                 react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelLevel, scale: "%", label: "Fuel level" }),
                 react_1.default.createElement(BoilerAlarmInfo_1.default, { alarmStatus: boilerParameters.alarm }),
-                react_1.default.createElement(BoilerControlsPanel_1.default, { boilerStatus: boilerParameters.currentStatus }))))) : (react_1.default.createElement(ink_1.Text, { color: "yellow" }, "Loading..."))));
+                react_1.default.createElement(BoilerControlsPanel_1.default, { boilerStatus: boilerParameters.currentStatus, id: id }))))) : (react_1.default.createElement(ink_1.Text, { color: "yellow" }, "Loading..."))));
 };
 exports.default = BoilerInfoView;

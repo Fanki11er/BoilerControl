@@ -7,10 +7,11 @@ import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 
 type Props = {
 	boilerStatus: BoilerStatus;
+	id: string;
 };
 
 const BoilerControlPanel = (props: Props) => {
-	const { boilerStatus } = props;
+	const { boilerStatus, id } = props;
 	const { handleBoilerControl } = useContext(BoilerContext);
 	const { handleChangeRoute } = useContext(RoutesContext);
 
@@ -48,7 +49,7 @@ const BoilerControlPanel = (props: Props) => {
 				break;
 			}
 			case "SETTINGS": {
-				console.log("Set");
+				handleChangeRoute("/Settings", id);
 				break;
 			}
 			default: {

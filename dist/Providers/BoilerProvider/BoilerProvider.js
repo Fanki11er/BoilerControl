@@ -34,6 +34,9 @@ exports.BoilerContext = (0, react_1.createContext)({
     handleSettingsChange: (settings) => {
         settings;
     },
+    handleGetBoilerSettings: () => {
+        return {};
+    },
 });
 const BoilerProvider = (props) => {
     const [boilerParameters, setBoilerParameters] = (0, react_1.useState)(null);
@@ -45,8 +48,10 @@ const BoilerProvider = (props) => {
         boiler && boiler.changeStatus(status);
     }, []);
     const handleSettingsChange = (0, react_1.useCallback)((settings) => {
-        //!!!!!!!!!!!
-        console.log(settings);
+        boiler.setBoilerSettings(settings);
+    }, []);
+    const handleGetBoilerSettings = (0, react_1.useCallback)(() => {
+        return boiler.getBoilerSettings();
     }, []);
     (0, react_1.useEffect)(() => {
         setTimeout(() => {
@@ -57,6 +62,7 @@ const BoilerProvider = (props) => {
         boilerParameters,
         handleSettingsChange,
         handleBoilerControl,
+        handleGetBoilerSettings,
     };
     return (react_1.default.createElement(exports.BoilerContext.Provider, { value: context }, props.children));
 };

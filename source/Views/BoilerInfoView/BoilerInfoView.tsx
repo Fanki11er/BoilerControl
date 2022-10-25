@@ -12,7 +12,7 @@ type Props = {
 
 const BoilerInfoView = (props: Props) => {
 	const { boilerParameters } = useContext(BoilerContext);
-	const {} = props;
+	const { id } = props;
 	return (
 		<Box
 			width={120}
@@ -58,6 +58,7 @@ const BoilerInfoView = (props: Props) => {
 							<BoilerAlarmInfo alarmStatus={boilerParameters.alarm} />
 							<BoilerControlPanel
 								boilerStatus={boilerParameters.currentStatus}
+								id={id}
 							/>
 						</>
 					</Box>

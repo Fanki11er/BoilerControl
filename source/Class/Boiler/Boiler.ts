@@ -13,7 +13,7 @@ export class Boiler {
 	private counter = 0;
 	private fuelUsed = 0;
 
-	boilerSettings: BoilerSettings;
+	private boilerSettings: BoilerSettings;
 
 	constructor(id: string) {
 		this.id = id;
@@ -28,7 +28,7 @@ export class Boiler {
 	}
 
 	private setOutsideTemperature() {
-		return Math.floor(Math.random() * 30) * Math.random() < 0.5 ? -1 : 1;
+		return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
 	}
 
 	getId() {
@@ -49,6 +49,13 @@ export class Boiler {
 			currentStatus: this.currentStatus,
 			alarm: this.alarm,
 		} as BoilerInfo;
+	}
+
+	getBoilerSettings() {
+		return this.boilerSettings;
+	}
+	setBoilerSettings(settings: BoilerSettings) {
+		console.log(settings);
 	}
 
 	setFuelLevel(newFuelLevel: number) {

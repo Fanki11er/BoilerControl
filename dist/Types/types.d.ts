@@ -1,4 +1,4 @@
-export declare type Routes = "/" | "/Login" | "/Register" | "/Main" | "/BoilerInfo";
+export declare type Routes = "/" | "/Login" | "/Register" | "/Main" | "/BoilerInfo" | "/Settings";
 export declare type Route = {
     currentRoute: Routes;
     payload?: string;

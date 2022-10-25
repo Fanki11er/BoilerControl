@@ -80,7 +80,7 @@ class Boiler {
         }, 1000);
     }
     setOutsideTemperature() {
-        return Math.floor(Math.random() * 30) * Math.random() < 0.5 ? -1 : 1;
+        return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
     }
     getId() {
         return this.id;
@@ -98,6 +98,12 @@ class Boiler {
             currentStatus: this.currentStatus,
             alarm: this.alarm,
         };
+    }
+    getBoilerSettings() {
+        return this.boilerSettings;
+    }
+    setBoilerSettings(settings) {
+        console.log(settings);
     }
     setFuelLevel(newFuelLevel) {
         this.currentFuelLevel = newFuelLevel;
