@@ -1,5 +1,5 @@
 import SelectInput, { Item } from "ink-select-input/build/SelectInput";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
 import Indicator from "../../Components/Indicator/Indicator";
@@ -11,17 +11,19 @@ const MainPage = () => {
 	const { handleChangeRoute } = useContext(RoutesContext);
 	const { user } = useContext(UserContext);
 
-	if (!user) {
-		handleChangeRoute("/Login");
-		return null;
-	}
+	useEffect(() => {
+		if (!user) {
+			handleChangeRoute("/Login");
+			//return null;
+		}
+	});
 
 	const handleSelect = (item: Item<string>) => {
 		if (item.value.match(/B\d/)) {
 			handleChangeRoute("/BoilerInfo", item.value);
 		}
 		if (item.value.includes("EXIT")) {
-			handleChangeRoute("/Register");
+			handleChangeRoute("/");
 		}
 	};
 	const buttons: Item<string>[] = [

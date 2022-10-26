@@ -1,8 +1,9 @@
 import { Form } from "ink-form";
 import React, { useCallback, useContext, useState } from "react";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
-import { Text } from "ink";
+import { Box, Text } from "ink";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
+import ButtonItem from "../../Components/ButtonItem/ButtonItem";
 
 type RegisterFormValues = {
 	userName: string;
@@ -13,7 +14,7 @@ const RegisterForm = () => {
 	const { handleChangeRoute } = useContext(RoutesContext);
 	const { handleSetUser } = useContext(UserContext);
 
-	const [iserror, setIsError] = useState("");
+	const [isError, setIsError] = useState("");
 	const validate = useCallback((values: RegisterFormValues) => {
 		if (values.password !== values.repeatedPassword) {
 			setIsError("Both passwords must be the same");
@@ -23,12 +24,16 @@ const RegisterForm = () => {
 		}
 	}, []);
 
+	const backToHeroPage = useCallback(() => {
+		handleChangeRoute("/");
+	}, []);
+
 	return (
 		<>
 			<Form
 				onSubmit={(values) => validate(values as RegisterFormValues)}
 				onChange={() => {
-					iserror && setIsError("");
+					isError && setIsError("");
 				}}
 				form={{
 					title: "",
@@ -63,7 +68,15 @@ const RegisterForm = () => {
 					],
 				}}
 			/>
-			{!!iserror && <Text color={"red"}>{iserror}</Text>}
+			{!!isError && <Text color={"red"}>{isError}</Text>}
+			<Box
+				alignSelf={"flex-end"}
+				justifyContent={"center"}
+				alignItems={"center"}
+			>
+				<Text>Press enter for return.</Text>
+				<ButtonItem label={"Return"} callback={backToHeroPage} />
+			</Box>
 		</>
 	);
 };

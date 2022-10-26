@@ -1,2 +1,2 @@
-declare const MainPage: () => JSX.Element | null;
+declare const MainPage: () => JSX.Element;
 export default MainPage;

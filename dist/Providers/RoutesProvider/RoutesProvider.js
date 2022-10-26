@@ -34,7 +34,7 @@ exports.RoutesContext = (0, react_1.createContext)({
 });
 const RouterProvider = (props) => {
     const [currentRoute, setCurrentRoute] = (0, react_1.useState)({
-        currentRoute: "/Register",
+        currentRoute: "/",
         payload: "",
     });
     const handleChangeRoute = (0, react_1.useCallback)((route, payload) => {

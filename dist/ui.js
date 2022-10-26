@@ -33,6 +33,7 @@ const RoutesProvider_1 = require("./Providers/RoutesProvider/RoutesProvider");
 const LoginForm_1 = __importDefault(require("./Views/LoginForm/LoginForm"));
 const RegisterForm_1 = __importDefault(require("./Views/RegisterForm/RegisterForm"));
 const SettingsView_1 = __importDefault(require("./Views/SettingsView/SettingsView"));
+const HeroPage_1 = __importDefault(require("./Views/HeroPage/HeroPage"));
 const App = () => {
     const { currentRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const switchComponents = (0, react_1.useCallback)((currentRoute) => {
@@ -53,7 +54,7 @@ const App = () => {
                 return react_1.default.createElement(SettingsView_1.default, { id: currentRoute.payload });
             }
             default: {
-                return react_1.default.createElement(RegisterForm_1.default, null);
+                return react_1.default.createElement(HeroPage_1.default, null);
             }
         }
     }, []);

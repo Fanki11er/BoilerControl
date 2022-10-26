@@ -130,7 +130,7 @@ const SettingsView = (props: Props) => {
 				justifyContent={"center"}
 				alignItems={"center"}
 			>
-				<Text>Push enter for return.</Text>
+				<Text>Press enter for return.</Text>
 				<ButtonItem label={"Return"} callback={backToBoilerInfo} />
 			</Box>
 		</>

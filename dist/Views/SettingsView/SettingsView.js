@@ -135,8 +135,7 @@ const SettingsView = (props) => {
                 ],
             } }),
         react_1.default.createElement(ink_1.Box, { alignSelf: "flex-end", justifyContent: "center", alignItems: "center" },
-            react_1.default.createElement(ink_1.Text, null, "Push enter for return."),
+            react_1.default.createElement(ink_1.Text, null, "Press enter for return."),
             react_1.default.createElement(ButtonItem_1.default, { label: "Return", callback: backToBoilerInfo }))));
 };
 exports.default = SettingsView;
-//);

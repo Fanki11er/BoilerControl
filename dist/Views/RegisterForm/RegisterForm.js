@@ -22,16 +22,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const ink_form_1 = require("ink-form");
 const react_1 = __importStar(require("react"));
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const ink_1 = require("ink");
 const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
+const ButtonItem_1 = __importDefault(require("../../Components/ButtonItem/ButtonItem"));
 const RegisterForm = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { handleSetUser } = (0, react_1.useContext)(UserProvider_1.UserContext);
-    const [iserror, setIsError] = (0, react_1.useState)("");
+    const [isError, setIsError] = (0, react_1.useState)("");
     const validate = (0, react_1.useCallback)((values) => {
         if (values.password !== values.repeatedPassword) {
             setIsError("Both passwords must be the same");
@@ -41,9 +45,12 @@ const RegisterForm = () => {
             handleChangeRoute("/Main");
         }
     }, []);
+    const backToHeroPage = (0, react_1.useCallback)(() => {
+        handleChangeRoute("/");
+    }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(ink_form_1.Form, { onSubmit: (values) => validate(values), onChange: () => {
-                iserror && setIsError("");
+                isError && setIsError("");
             }, form: {
                 title: "",
                 sections: [
@@ -75,6 +82,9 @@ const RegisterForm = () => {
                     },
                 ],
             } }),
-        !!iserror && react_1.default.createElement(ink_1.Text, { color: "red" }, iserror)));
+        !!isError && react_1.default.createElement(ink_1.Text, { color: "red" }, isError),
+        react_1.default.createElement(ink_1.Box, { alignSelf: "flex-end", justifyContent: "center", alignItems: "center" },
+            react_1.default.createElement(ink_1.Text, null, "Press enter for return."),
+            react_1.default.createElement(ButtonItem_1.default, { label: "Return", callback: backToHeroPage }))));
 };
 exports.default = RegisterForm;

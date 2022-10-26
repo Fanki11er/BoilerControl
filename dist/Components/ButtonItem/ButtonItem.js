@@ -7,14 +7,17 @@ const react_1 = __importDefault(require("react"));
 const ink_1 = require("ink");
 const ButtonItem = (props) => {
     const { callback, label } = props;
-    const { isFocused } = (0, ink_1.useFocus)();
+    const { isFocused } = (0, ink_1.useFocus)({
+        id: props.id ? props.id : undefined,
+        autoFocus: props.autoFocus ? true : false,
+    });
     (0, ink_1.useInput)((input, key) => {
         input;
         if (isFocused && key.return) {
             callback();
         }
     });
-    return (react_1.default.createElement(ink_1.Box, { borderColor: isFocused ? "blue" : "white", borderStyle: "round", width: 10, height: 3, alignItems: "center", alignSelf: "flex-end", justifyContent: "center", marginLeft: 5 },
+    return (react_1.default.createElement(ink_1.Box, { borderColor: isFocused ? "blue" : "white", borderStyle: "round", width: props.width ? props.width : 10, height: 3, alignItems: "center", alignSelf: "flex-end", justifyContent: "center", marginLeft: 5 },
         react_1.default.createElement(ink_1.Text, { color: isFocused ? "blue" : undefined, underline: isFocused ? true : false, bold: true }, ` ${label} `)));
 };
 exports.default = ButtonItem;

@@ -16,7 +16,7 @@ export const RoutesContext = createContext({
 
 const RouterProvider = (props: PropsWithChildren) => {
 	const [currentRoute, setCurrentRoute] = useState<Route>({
-		currentRoute: "/Register",
+		currentRoute: "/",
 		payload: "",
 	});
 

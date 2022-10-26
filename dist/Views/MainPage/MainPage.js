@@ -37,16 +37,18 @@ const ink_1 = require("ink");
 const MainPage = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { user } = (0, react_1.useContext)(UserProvider_1.UserContext);
-    if (!user) {
-        handleChangeRoute("/Login");
-        return null;
-    }
+    (0, react_1.useEffect)(() => {
+        if (!user) {
+            handleChangeRoute("/Login");
+            //return null;
+        }
+    });
     const handleSelect = (item) => {
         if (item.value.match(/B\d/)) {
             handleChangeRoute("/BoilerInfo", item.value);
         }
         if (item.value.includes("EXIT")) {
-            handleChangeRoute("/Register");
+            handleChangeRoute("/");
         }
     };
     const buttons = [

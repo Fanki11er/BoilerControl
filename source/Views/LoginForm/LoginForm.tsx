@@ -1,105 +1,74 @@
-//import { render } from "ink";
+import { Box, Text } from "ink";
 import { Form } from "ink-form";
-import React from "react";
+import React, { useCallback, useContext, useState } from "react";
+import ButtonItem from "../../Components/ButtonItem/ButtonItem";
+import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
+import { UserContext } from "../../Providers/UserProvider/UserProvider";
 
-const options = [
-	{ label: "Millenium Falcon", value: "falcon" },
-	{ label: "TIE Advanced X1", value: "tieadv" },
-	{ label: "X-Wing", value: "xwing" },
-	{ label: "Raizorcrest", value: "mando" },
-];
+type LoginFormValues = {
+	name: string;
+	password: string;
+};
 
-//render(
 const LoginForm = () => {
+	const { handleSetUser } = useContext(UserContext);
+	const { handleChangeRoute } = useContext(RoutesContext);
+
+	const [isError, setIsError] = useState("");
+
+	const backToHeroPage = useCallback(() => {
+		handleChangeRoute("/");
+	}, []);
+
+	const validate = useCallback((values: LoginFormValues) => {
+		if (values.name === "") {
+			setIsError("Name can't be empty");
+		} else {
+			handleSetUser(values.name);
+			handleChangeRoute("/Main");
+		}
+	}, []);
 	return (
-		<Form
-			onSubmit={(value) => console.log(`Submitted: `, value)}
-			form={{
-				title: "Form title",
-				sections: [
-					{
-						title: "Text fields",
-						fields: [
-							{
-								type: "string",
-								name: "field1",
-								label: "Input with initial value",
-								initialValue: "Initial value",
-							},
-							{
-								type: "string",
-								name: "field2",
-								label: "Masked input",
-								mask: "*",
-							},
-							{
-								type: "string",
-								name: "field3",
-								label: "Input with placeholder, description and required flag",
-								placeholder: "Placeholder",
-								required: true,
-								description: "Hello I am a description",
-							},
-							{ type: "string", name: "field4-nolabel" },
-							{
-								type: "string",
-								name: "field5",
-								label: "Regex, must be an url",
-								regex:
-									/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
-							},
-						],
-					},
-					{
-						title: "Numerical fields",
-						fields: [
-							{ type: "integer", name: "field10", label: "Integer" },
-							{
-								type: "integer",
-								name: "field11",
-								label: "Integer between -5 and 8, stepsize 2",
-								min: -5,
-								max: 8,
-								step: 2,
-							},
-							{ type: "float", name: "field12", label: "Float" },
-							{
-								type: "float",
-								name: "field13",
-								label: "Float between 0 and 5, stepsize 0.1",
-								min: 0,
-								max: 5,
-								step: 0.1,
-							},
-						],
-					},
-					{
-						title: "Selection fields",
-						fields: [
-							{ type: "select", name: "field20", label: "Select", options },
-							{
-								type: "multiselect",
-								name: "field21",
-								label: "Multi Select",
-								options,
-							},
-						],
-					},
-					{
-						title: "Help Section",
-						description: [
-							"You can use a section without any fields and just a description attribute for additional documentation sections.",
-							"This section for example can help as a help page.",
-							'You could also add a "About", "Readme" or different pages.',
-						],
-						fields: [],
-					},
-				],
-			}}
-		/>
+		<>
+			<Form
+				onSubmit={(value) => validate(value as LoginFormValues)}
+				onChange={() => {
+					setIsError("");
+				}}
+				form={{
+					sections: [
+						{
+							title: "Sign in",
+							fields: [
+								{
+									type: "string",
+									name: "name",
+									label: "User name",
+									initialValue: "",
+								},
+								{
+									type: "string",
+									name: "password",
+									label: "User password",
+									mask: "*",
+								},
+							],
+						},
+					],
+				}}
+			/>
+			{!!isError && <Text color={"red"}>{isError}</Text>}
+
+			<Box
+				alignSelf={"flex-end"}
+				justifyContent={"center"}
+				alignItems={"center"}
+			>
+				<Text>Press enter for return.</Text>
+				<ButtonItem label={"Return"} callback={backToHeroPage} id={"10"} />
+			</Box>
+		</>
 	);
 };
 
 export default LoginForm;
-
-//);

@@ -7,6 +7,7 @@ import { Route } from "./Types/types";
 import LoginForm from "./Views/LoginForm/LoginForm";
 import RegisterForm from "./Views/RegisterForm/RegisterForm";
 import SettingsView from "./Views/SettingsView/SettingsView";
+import HeroPage from "./Views/HeroPage/HeroPage";
 
 const App = () => {
 	const { currentRoute } = useContext(RoutesContext);
@@ -29,7 +30,7 @@ const App = () => {
 				return <SettingsView id={currentRoute.payload!} />;
 			}
 			default: {
-				return <RegisterForm />;
+				return <HeroPage />;
 			}
 		}
 	}, []);
