@@ -1,7 +1,6 @@
-import { Box, Text } from "ink";
 import { Form } from "ink-form";
 import React, { useContext } from "react";
-import ButtonItem from "../../Components/ButtonItem/ButtonItem";
+import ReturnWrapper from "../../Components/ReturnWrapper/ReturnWrapper";
 import { BoilerContext } from "../../Providers/BoilerProvider/BoilerProvider";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 
@@ -25,13 +24,9 @@ const SettingsView = (props: Props) => {
 		supervisionWaitingTime,
 	} = currentSettings.advancedSettings;
 
-	const backToBoilerInfo = () => {
-		handleChangeRoute("/BoilerInfo", id);
-	};
-
 	//!!Add function for searching boiler by Id or sending request with Id
 	return (
-		<>
+		<ReturnWrapper path={"/BoilerInfo"}>
 			<Form
 				onSubmit={(value) => {
 					handleSettingsChange(value);
@@ -125,15 +120,7 @@ const SettingsView = (props: Props) => {
 					],
 				}}
 			/>
-			<Box
-				alignSelf={"flex-end"}
-				justifyContent={"center"}
-				alignItems={"center"}
-			>
-				<Text>Press enter for return.</Text>
-				<ButtonItem label={"Return"} callback={backToBoilerInfo} />
-			</Box>
-		</>
+		</ReturnWrapper>
 	);
 };
 

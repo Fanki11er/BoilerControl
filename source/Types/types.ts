@@ -4,7 +4,8 @@ export type Routes =
 	| "/Register"
 	| "/Main"
 	| "/BoilerInfo"
-	| "/Settings";
+	| "/Settings"
+	| "/AddBoiler";
 
 export type Route = {
 	currentRoute: Routes;

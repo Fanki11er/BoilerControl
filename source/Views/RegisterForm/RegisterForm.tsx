@@ -1,9 +1,10 @@
 import { Form } from "ink-form";
 import React, { useCallback, useContext, useState } from "react";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
-import { Box, Text } from "ink";
+import { Text } from "ink";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
-import ButtonItem from "../../Components/ButtonItem/ButtonItem";
+
+import ReturnWrapper from "../../Components/ReturnWrapper/ReturnWrapper";
 
 type RegisterFormValues = {
 	userName: string;
@@ -24,12 +25,8 @@ const RegisterForm = () => {
 		}
 	}, []);
 
-	const backToHeroPage = useCallback(() => {
-		handleChangeRoute("/");
-	}, []);
-
 	return (
-		<>
+		<ReturnWrapper path={"/"}>
 			<Form
 				onSubmit={(values) => validate(values as RegisterFormValues)}
 				onChange={() => {
@@ -69,15 +66,7 @@ const RegisterForm = () => {
 				}}
 			/>
 			{!!isError && <Text color={"red"}>{isError}</Text>}
-			<Box
-				alignSelf={"flex-end"}
-				justifyContent={"center"}
-				alignItems={"center"}
-			>
-				<Text>Press enter for return.</Text>
-				<ButtonItem label={"Return"} callback={backToHeroPage} />
-			</Box>
-		</>
+		</ReturnWrapper>
 	);
 };
 

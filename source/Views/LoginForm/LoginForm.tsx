@@ -1,7 +1,7 @@
-import { Box, Text } from "ink";
+import { Text } from "ink";
 import { Form } from "ink-form";
 import React, { useCallback, useContext, useState } from "react";
-import ButtonItem from "../../Components/ButtonItem/ButtonItem";
+import ReturnWrapper from "../../Components/ReturnWrapper/ReturnWrapper";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
 
@@ -16,10 +16,6 @@ const LoginForm = () => {
 
 	const [isError, setIsError] = useState("");
 
-	const backToHeroPage = useCallback(() => {
-		handleChangeRoute("/");
-	}, []);
-
 	const validate = useCallback((values: LoginFormValues) => {
 		if (values.name === "") {
 			setIsError("Name can't be empty");
@@ -29,7 +25,7 @@ const LoginForm = () => {
 		}
 	}, []);
 	return (
-		<>
+		<ReturnWrapper path={"/"}>
 			<Form
 				onSubmit={(value) => validate(value as LoginFormValues)}
 				onChange={() => {
@@ -58,16 +54,7 @@ const LoginForm = () => {
 				}}
 			/>
 			{!!isError && <Text color={"red"}>{isError}</Text>}
-
-			<Box
-				alignSelf={"flex-end"}
-				justifyContent={"center"}
-				alignItems={"center"}
-			>
-				<Text>Press enter for return.</Text>
-				<ButtonItem label={"Return"} callback={backToHeroPage} id={"10"} />
-			</Box>
-		</>
+		</ReturnWrapper>
 	);
 };
 

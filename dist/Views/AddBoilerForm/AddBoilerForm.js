@@ -26,49 +26,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ink_1 = require("ink");
-const ink_form_1 = require("ink-form");
 const react_1 = __importStar(require("react"));
-const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
+const ink_form_1 = require("ink-form");
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
-const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
-const LoginForm = () => {
-    const { handleSetUser } = (0, react_1.useContext)(UserProvider_1.UserContext);
+const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
+const AddBoilerForm = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
-    const [isError, setIsError] = (0, react_1.useState)("");
-    const validate = (0, react_1.useCallback)((values) => {
-        if (values.name === "") {
-            setIsError("Name can't be empty");
-        }
-        else {
-            handleSetUser(values.name);
-            handleChangeRoute("/Main");
-        }
+    const handleSubmit = (0, react_1.useCallback)((values) => {
+        values;
+        handleChangeRoute("/Main");
     }, []);
-    return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/" },
-        react_1.default.createElement(ink_form_1.Form, { onSubmit: (value) => validate(value), onChange: () => {
-                setIsError("");
-            }, form: {
+    return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/Main" },
+        react_1.default.createElement(ink_form_1.Form, { onSubmit: (values) => handleSubmit(values), form: {
+                title: "",
                 sections: [
                     {
-                        title: "Sign in",
+                        title: "Add boiler form",
                         fields: [
                             {
                                 type: "string",
-                                name: "name",
-                                label: "User name",
+                                name: "boilerId",
+                                label: "Boiler Id",
+                                required: true,
                                 initialValue: "",
-                            },
-                            {
-                                type: "string",
-                                name: "password",
-                                label: "User password",
-                                mask: "*",
                             },
                         ],
                     },
                 ],
-            } }),
-        !!isError && react_1.default.createElement(ink_1.Text, { color: "red" }, isError)));
+            } })));
 };
-exports.default = LoginForm;
+exports.default = AddBoilerForm;

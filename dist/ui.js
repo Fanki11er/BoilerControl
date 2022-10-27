@@ -34,6 +34,7 @@ const LoginForm_1 = __importDefault(require("./Views/LoginForm/LoginForm"));
 const RegisterForm_1 = __importDefault(require("./Views/RegisterForm/RegisterForm"));
 const SettingsView_1 = __importDefault(require("./Views/SettingsView/SettingsView"));
 const HeroPage_1 = __importDefault(require("./Views/HeroPage/HeroPage"));
+const AddBoilerForm_1 = __importDefault(require("./Views/AddBoilerForm/AddBoilerForm"));
 const App = () => {
     const { currentRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const switchComponents = (0, react_1.useCallback)((currentRoute) => {
@@ -52,6 +53,9 @@ const App = () => {
             }
             case "/Settings": {
                 return react_1.default.createElement(SettingsView_1.default, { id: currentRoute.payload });
+            }
+            case "/AddBoiler": {
+                return react_1.default.createElement(AddBoilerForm_1.default, null);
             }
             default: {
                 return react_1.default.createElement(HeroPage_1.default, null);

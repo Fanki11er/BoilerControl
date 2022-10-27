@@ -25,6 +25,9 @@ const MainPage = () => {
 		if (item.value.includes("EXIT")) {
 			handleChangeRoute("/");
 		}
+		if (item.value.includes("ADD")) {
+			handleChangeRoute("/AddBoiler");
+		}
 	};
 	const buttons: Item<string>[] = [
 		{

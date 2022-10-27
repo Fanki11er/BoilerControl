@@ -31,7 +31,7 @@ const react_1 = __importStar(require("react"));
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const ink_1 = require("ink");
 const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
-const ButtonItem_1 = __importDefault(require("../../Components/ButtonItem/ButtonItem"));
+const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
 const RegisterForm = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { handleSetUser } = (0, react_1.useContext)(UserProvider_1.UserContext);
@@ -45,10 +45,7 @@ const RegisterForm = () => {
             handleChangeRoute("/Main");
         }
     }, []);
-    const backToHeroPage = (0, react_1.useCallback)(() => {
-        handleChangeRoute("/");
-    }, []);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/" },
         react_1.default.createElement(ink_form_1.Form, { onSubmit: (values) => validate(values), onChange: () => {
                 isError && setIsError("");
             }, form: {
@@ -82,9 +79,6 @@ const RegisterForm = () => {
                     },
                 ],
             } }),
-        !!isError && react_1.default.createElement(ink_1.Text, { color: "red" }, isError),
-        react_1.default.createElement(ink_1.Box, { alignSelf: "flex-end", justifyContent: "center", alignItems: "center" },
-            react_1.default.createElement(ink_1.Text, null, "Press enter for return."),
-            react_1.default.createElement(ButtonItem_1.default, { label: "Return", callback: backToHeroPage }))));
+        !!isError && react_1.default.createElement(ink_1.Text, { color: "red" }, isError)));
 };
 exports.default = RegisterForm;

@@ -8,6 +8,7 @@ import LoginForm from "./Views/LoginForm/LoginForm";
 import RegisterForm from "./Views/RegisterForm/RegisterForm";
 import SettingsView from "./Views/SettingsView/SettingsView";
 import HeroPage from "./Views/HeroPage/HeroPage";
+import AddBoilerForm from "./Views/AddBoilerForm/AddBoilerForm";
 
 const App = () => {
 	const { currentRoute } = useContext(RoutesContext);
@@ -28,6 +29,9 @@ const App = () => {
 			}
 			case "/Settings": {
 				return <SettingsView id={currentRoute.payload!} />;
+			}
+			case "/AddBoiler": {
+				return <AddBoilerForm />;
 			}
 			default: {
 				return <HeroPage />;
