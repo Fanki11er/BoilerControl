@@ -36,6 +36,11 @@ const ButtonItem_1 = __importDefault(require("../../Components/ButtonItem/Button
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const HeroPage = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
+    const { exit } = (0, ink_1.useApp)();
+    const handleAppExit = (0, react_1.useCallback)(() => {
+        exit();
+        console.log("App terminated");
+    }, []);
     return (react_1.default.createElement(ink_1.Box, { flexDirection: "column", alignSelf: "center", alignItems: "center", justifyContent: "space-between", height: 30 },
         react_1.default.createElement(ink_gradient_1.default, { name: "mind" },
             react_1.default.createElement(ink_big_text_1.default, { text: `      Boiler` }),
@@ -43,8 +48,9 @@ const HeroPage = () => {
         react_1.default.createElement(ink_1.Newline, null),
         react_1.default.createElement(ink_1.Box, { flexDirection: "column", alignItems: "center" },
             react_1.default.createElement(ink_1.Text, null, "Press tab to select and enter for accept"),
-            react_1.default.createElement(ink_1.Box, { width: 40, alignItems: "center" },
+            react_1.default.createElement(ink_1.Box, { width: 60, alignItems: "center" },
                 react_1.default.createElement(ButtonItem_1.default, { label: "Sign in", callback: () => handleChangeRoute("/Login"), width: 12, autoFocus: true }),
-                react_1.default.createElement(ButtonItem_1.default, { label: "Register", callback: () => handleChangeRoute("/Register"), width: 12 })))));
+                react_1.default.createElement(ButtonItem_1.default, { label: "Register", callback: () => handleChangeRoute("/Register"), width: 12 }),
+                react_1.default.createElement(ButtonItem_1.default, { label: "Exit", callback: () => handleAppExit(), width: 12 })))));
 };
 exports.default = HeroPage;

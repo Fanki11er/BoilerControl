@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Box, Newline, Text } from "ink";
+import React, { useCallback, useContext } from "react";
+import { Box, Newline, Text, useApp } from "ink";
 //@ts-ignore
 import Gradient from "ink-gradient";
 //@ts-ignore
@@ -9,6 +9,11 @@ import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 
 const HeroPage = () => {
 	const { handleChangeRoute } = useContext(RoutesContext);
+	const { exit } = useApp();
+	const handleAppExit = useCallback(() => {
+		exit();
+		console.log("Application terminated");
+	}, []);
 	return (
 		<Box
 			flexDirection={"column"}
@@ -24,7 +29,7 @@ const HeroPage = () => {
 			<Newline />
 			<Box flexDirection={"column"} alignItems={"center"}>
 				<Text>Press tab to select and enter for accept</Text>
-				<Box width={40} alignItems={"center"}>
+				<Box width={60} alignItems={"center"}>
 					<ButtonItem
 						label="Sign in"
 						callback={() => handleChangeRoute("/Login")}
@@ -34,6 +39,11 @@ const HeroPage = () => {
 					<ButtonItem
 						label="Register"
 						callback={() => handleChangeRoute("/Register")}
+						width={12}
+					/>
+					<ButtonItem
+						label="Exit"
+						callback={() => handleAppExit()}
 						width={12}
 					/>
 				</Box>
