@@ -5,7 +5,7 @@ export class Boiler {
 	private id;
 	private currentTemperature: number;
 	private currentFanSpeed = 0;
-	private currentFuelLevel = 1;
+	private currentFuelLevel: number;
 	private alarm = "";
 	private currentOutsideTemperature: number;
 	private currentFuelStream = 0;
@@ -18,7 +18,7 @@ export class Boiler {
 	constructor(id: string) {
 		this.id = id;
 		this.currentOutsideTemperature = this.randomSetOutsideTemperature();
-		//this.randomSetFuelLevel();
+		this.currentFuelLevel = this.randomSetFuelLevel();
 		this.currentTemperature = this.currentOutsideTemperature + 10;
 		this.boilerSettings = new BoilerSettings();
 
@@ -32,9 +32,9 @@ export class Boiler {
 		return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
 	}
 
-	/*private randomSetFuelLevel() {
+	private randomSetFuelLevel() {
 		return Math.floor(Math.random() * 100);
-	}*/
+	}
 
 	getId() {
 		return this.id;
@@ -202,7 +202,6 @@ export class Boiler {
 				this.setFuelLevel(100);
 				break;
 			}
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			default: {
 				break;
 			}
