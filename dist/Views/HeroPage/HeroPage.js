@@ -57,7 +57,7 @@ const HeroPage = () => {
             react_1.default.createElement(ink_big_text_1.default, { text: "Controller" })),
         react_1.default.createElement(ink_1.Newline, null),
         react_1.default.createElement(ink_1.Box, { flexDirection: "column", alignItems: "center" },
-            react_1.default.createElement(ink_1.Text, null, "Press tab to select and enter for accept"),
+            react_1.default.createElement(ink_1.Text, null, "Use arrows for select button and enter for accept"),
             react_1.default.createElement(ink_1.Box, { width: 60, alignItems: "center" },
                 react_1.default.createElement(ButtonItem_1.default, { label: "Sign in", callback: () => handleChangeRoute("/Login"), width: 12, autoFocus: true }),
                 react_1.default.createElement(ButtonItem_1.default, { label: "Register", callback: () => handleChangeRoute("/Register"), width: 12 }),

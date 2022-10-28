@@ -13,7 +13,7 @@ export declare class Boiler {
     private fuelUsed;
     private boilerSettings;
     constructor(id: string);
-    private setOutsideTemperature;
+    private randomSetOutsideTemperature;
     getId(): string;
     getAlarm(): string;
     getBoilerInfo(): BoilerInfo;
@@ -22,6 +22,7 @@ export declare class Boiler {
     setFuelLevel(newFuelLevel: number): void;
     startBoiler(): void;
     stopBoiler(): void;
+    resetAlarms(): void;
     private updateCounter;
     private update;
     private figureSpeedOfTempFalling;

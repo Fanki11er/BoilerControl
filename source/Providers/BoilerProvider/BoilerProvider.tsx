@@ -35,7 +35,11 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	}, []);
 
 	const handleBoilerControl = useCallback((status: PanelOptions) => {
-		boiler && boiler.changeStatus(status);
+		if (boiler && status === "RESET") {
+			boiler.resetAlarms();
+		} else if (boiler) {
+			boiler.changeStatus(status);
+		}
 	}, []);
 
 	const handleSettingsChange = useCallback((settings: any) => {
@@ -49,7 +53,7 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			handleChangeParameters();
-		}, 1000);
+		}, 500);
 
 		return () => {
 			return clearInterval(interval);

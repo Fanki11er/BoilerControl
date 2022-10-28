@@ -5,7 +5,7 @@ export class Boiler {
 	private id;
 	private currentTemperature: number;
 	private currentFanSpeed = 0;
-	private currentFuelLevel = 100;
+	private currentFuelLevel = 1;
 	private alarm = "";
 	private currentOutsideTemperature: number;
 	private currentFuelStream = 0;
@@ -17,7 +17,8 @@ export class Boiler {
 
 	constructor(id: string) {
 		this.id = id;
-		this.currentOutsideTemperature = this.setOutsideTemperature();
+		this.currentOutsideTemperature = this.randomSetOutsideTemperature();
+		//this.randomSetFuelLevel();
 		this.currentTemperature = this.currentOutsideTemperature + 10;
 		this.boilerSettings = new BoilerSettings();
 
@@ -27,9 +28,13 @@ export class Boiler {
 		}, 1000);
 	}
 
-	private setOutsideTemperature() {
+	private randomSetOutsideTemperature() {
 		return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
 	}
+
+	/*private randomSetFuelLevel() {
+		return Math.floor(Math.random() * 100);
+	}*/
 
 	getId() {
 		return this.id;
@@ -63,14 +68,20 @@ export class Boiler {
 	}
 
 	startBoiler() {
-		this.currentStatus = "Working";
-		this.currentFanSpeed = this.boilerSettings.advancedSettings.fanSpeed;
+		if (this.alarm === "") {
+			this.currentStatus = "Working";
+			this.currentFanSpeed = this.boilerSettings.advancedSettings.fanSpeed;
+		}
 	}
 
 	stopBoiler() {
 		this.currentStatus = "Stopped";
 		this.currentFanSpeed = 0;
 		this.currentFuelStream = 0;
+	}
+
+	resetAlarms() {
+		this.alarm = "";
 	}
 
 	private updateCounter() {
@@ -160,6 +171,11 @@ export class Boiler {
 			if (this.fuelUsed >= 15) {
 				this.fuelUsed = 0;
 				this.currentFuelLevel -= 1;
+			}
+
+			if (this.currentFuelLevel <= 0) {
+				this.stopBoiler();
+				this.alarm = "No fuel!";
 			}
 		} else {
 			this.currentStatus = "Idle";

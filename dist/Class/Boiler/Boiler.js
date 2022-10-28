@@ -26,7 +26,7 @@ class Boiler {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: 100
+            value: 1
         });
         Object.defineProperty(this, "alarm", {
             enumerable: true,
@@ -71,7 +71,8 @@ class Boiler {
             value: void 0
         });
         this.id = id;
-        this.currentOutsideTemperature = this.setOutsideTemperature();
+        this.currentOutsideTemperature = this.randomSetOutsideTemperature();
+        //this.randomSetFuelLevel();
         this.currentTemperature = this.currentOutsideTemperature + 10;
         this.boilerSettings = new BoilerSettings_1.BoilerSettings();
         setInterval(() => {
@@ -79,9 +80,12 @@ class Boiler {
             this.update();
         }, 1000);
     }
-    setOutsideTemperature() {
+    randomSetOutsideTemperature() {
         return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
     }
+    /*private randomSetFuelLevel() {
+        return Math.floor(Math.random() * 100);
+    }*/
     getId() {
         return this.id;
     }
@@ -109,13 +113,18 @@ class Boiler {
         this.currentFuelLevel = newFuelLevel;
     }
     startBoiler() {
-        this.currentStatus = "Working";
-        this.currentFanSpeed = this.boilerSettings.advancedSettings.fanSpeed;
+        if (this.alarm === "") {
+            this.currentStatus = "Working";
+            this.currentFanSpeed = this.boilerSettings.advancedSettings.fanSpeed;
+        }
     }
     stopBoiler() {
         this.currentStatus = "Stopped";
         this.currentFanSpeed = 0;
         this.currentFuelStream = 0;
+    }
+    resetAlarms() {
+        this.alarm = "";
     }
     updateCounter() {
         if (this.counter <= 260) {
@@ -197,6 +206,10 @@ class Boiler {
             if (this.fuelUsed >= 15) {
                 this.fuelUsed = 0;
                 this.currentFuelLevel -= 1;
+            }
+            if (this.currentFuelLevel <= 0) {
+                this.stopBoiler();
+                this.alarm = "No fuel!";
             }
         }
         else {

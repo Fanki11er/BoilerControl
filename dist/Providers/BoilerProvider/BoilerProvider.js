@@ -45,7 +45,12 @@ const BoilerProvider = (props) => {
         setBoilerParameters(boiler.getBoilerParameters());
     }, []);
     const handleBoilerControl = (0, react_1.useCallback)((status) => {
-        boiler && boiler.changeStatus(status);
+        if (boiler && status === "RESET") {
+            boiler.resetAlarms();
+        }
+        else if (boiler) {
+            boiler.changeStatus(status);
+        }
     }, []);
     const handleSettingsChange = (0, react_1.useCallback)((settings) => {
         boiler.setBoilerSettings(settings);
@@ -56,7 +61,7 @@ const BoilerProvider = (props) => {
     (0, react_1.useEffect)(() => {
         const interval = setInterval(() => {
             handleChangeParameters();
-        }, 1000);
+        }, 500);
         return () => {
             return clearInterval(interval);
         };
