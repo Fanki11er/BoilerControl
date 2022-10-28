@@ -14,10 +14,10 @@ const HeroPage = () => {
 
 	useInput((input, key) => {
 		input;
-		if (key.leftArrow) {
+		if (key.leftArrow || key.upArrow) {
 			focusPrevious();
 		}
-		if (key.rightArrow) {
+		if (key.rightArrow || key.downArrow) {
 			focusNext();
 		}
 	});

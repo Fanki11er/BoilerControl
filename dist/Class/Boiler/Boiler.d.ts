@@ -14,6 +14,7 @@ export declare class Boiler {
     private boilerSettings;
     constructor(id: string);
     private randomSetOutsideTemperature;
+    private randomSetFuelLevel;
     getId(): string;
     getAlarm(): string;
     getBoilerInfo(): BoilerInfo;

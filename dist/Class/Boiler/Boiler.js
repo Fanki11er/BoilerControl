@@ -26,7 +26,7 @@ class Boiler {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: 1
+            value: void 0
         });
         Object.defineProperty(this, "alarm", {
             enumerable: true,
@@ -72,7 +72,7 @@ class Boiler {
         });
         this.id = id;
         this.currentOutsideTemperature = this.randomSetOutsideTemperature();
-        //this.randomSetFuelLevel();
+        this.currentFuelLevel = this.randomSetFuelLevel();
         this.currentTemperature = this.currentOutsideTemperature + 10;
         this.boilerSettings = new BoilerSettings_1.BoilerSettings();
         setInterval(() => {
@@ -83,9 +83,9 @@ class Boiler {
     randomSetOutsideTemperature() {
         return Math.random() < 0.5 ? -1 : 1 * Math.floor(Math.random() * 30);
     }
-    /*private randomSetFuelLevel() {
+    randomSetFuelLevel() {
         return Math.floor(Math.random() * 100);
-    }*/
+    }
     getId() {
         return this.id;
     }
@@ -235,7 +235,6 @@ class Boiler {
                 this.setFuelLevel(100);
                 break;
             }
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             default: {
                 break;
             }

@@ -40,10 +40,10 @@ const HeroPage = () => {
     const { focusNext, focusPrevious } = (0, ink_1.useFocusManager)();
     (0, ink_1.useInput)((input, key) => {
         input;
-        if (key.leftArrow) {
+        if (key.leftArrow || key.upArrow) {
             focusPrevious();
         }
-        if (key.rightArrow) {
+        if (key.rightArrow || key.downArrow) {
             focusNext();
         }
     });
