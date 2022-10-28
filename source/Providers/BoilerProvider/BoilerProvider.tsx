@@ -47,12 +47,14 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	}, []);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => {
+		const interval = setInterval(() => {
 			handleChangeParameters();
-		}, 2000);
+		}, 1000);
 
-		return clearTimeout(timeout);
-	}, [boilerParameters]);
+		return () => {
+			return clearInterval(interval);
+		};
+	}, []);
 
 	const context = {
 		boilerParameters,

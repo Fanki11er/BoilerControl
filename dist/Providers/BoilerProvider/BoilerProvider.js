@@ -54,11 +54,13 @@ const BoilerProvider = (props) => {
         return boiler.getBoilerSettings();
     }, []);
     (0, react_1.useEffect)(() => {
-        const timeout = setTimeout(() => {
+        const interval = setInterval(() => {
             handleChangeParameters();
-        }, 2000);
-        return clearTimeout(timeout);
-    }, [boilerParameters]);
+        }, 1000);
+        return () => {
+            return clearInterval(interval);
+        };
+    }, []);
     const context = {
         boilerParameters,
         handleSettingsChange,

@@ -39,7 +39,7 @@ const HeroPage = () => {
     const { exit } = (0, ink_1.useApp)();
     const handleAppExit = (0, react_1.useCallback)(() => {
         exit();
-        console.log("App terminated");
+        console.log("Application terminated");
     }, []);
     return (react_1.default.createElement(ink_1.Box, { flexDirection: "column", alignSelf: "center", alignItems: "center", justifyContent: "space-between", height: 30 },
         react_1.default.createElement(ink_gradient_1.default, { name: "mind" },
