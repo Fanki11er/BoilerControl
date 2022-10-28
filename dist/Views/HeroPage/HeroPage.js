@@ -37,6 +37,16 @@ const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider"
 const HeroPage = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { exit } = (0, ink_1.useApp)();
+    const { focusNext, focusPrevious } = (0, ink_1.useFocusManager)();
+    (0, ink_1.useInput)((input, key) => {
+        input;
+        if (key.leftArrow) {
+            focusPrevious();
+        }
+        if (key.rightArrow) {
+            focusNext();
+        }
+    });
     const handleAppExit = (0, react_1.useCallback)(() => {
         exit();
         console.log("Application terminated");

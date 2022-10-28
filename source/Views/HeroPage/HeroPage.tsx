@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from "react";
-import { Box, Newline, Text, useApp } from "ink";
+import { Box, Newline, Text, useApp, useFocusManager, useInput } from "ink";
 //@ts-ignore
 import Gradient from "ink-gradient";
 //@ts-ignore
@@ -10,6 +10,17 @@ import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 const HeroPage = () => {
 	const { handleChangeRoute } = useContext(RoutesContext);
 	const { exit } = useApp();
+	const { focusNext, focusPrevious } = useFocusManager();
+
+	useInput((input, key) => {
+		input;
+		if (key.leftArrow) {
+			focusPrevious();
+		}
+		if (key.rightArrow) {
+			focusNext();
+		}
+	});
 	const handleAppExit = useCallback(() => {
 		exit();
 		console.log("Application terminated");
@@ -28,7 +39,7 @@ const HeroPage = () => {
 			</Gradient>
 			<Newline />
 			<Box flexDirection={"column"} alignItems={"center"}>
-				<Text>Press tab to select and enter for accept</Text>
+				<Text>Use arrows for select button and enter for accept</Text>
 				<Box width={60} alignItems={"center"}>
 					<ButtonItem
 						label="Sign in"
