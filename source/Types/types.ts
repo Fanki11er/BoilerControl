@@ -21,3 +21,8 @@ export type PanelOptions =
 	| "REFUEL"
 	| "SETTINGS"
 	| "EXIT";
+
+export type User = {
+	userName: string;
+	userId: number;
+};

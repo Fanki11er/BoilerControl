@@ -4,18 +4,19 @@ import React, {
 	useCallback,
 	useState,
 } from "react";
+import { User } from "../../Types/types";
 
 export const UserContext = createContext({
-	user: null as string | null,
-	handleSetUser: (user: string) => {
+	user: null as User | null,
+	handleSetUser: (user: User) => {
 		user;
 	},
 });
 
 const UserProvider = (props: PropsWithChildren) => {
-	const [user, setUser] = useState<string | null>(null);
+	const [user, setUser] = useState<User | null>(null);
 
-	const handleSetUser = useCallback((user: string) => {
+	const handleSetUser = useCallback((user: User) => {
 		setUser(user);
 	}, []);
 

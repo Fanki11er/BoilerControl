@@ -4,6 +4,10 @@ import React, { useCallback, useContext, useState } from "react";
 import ReturnWrapper from "../../Components/ReturnWrapper/ReturnWrapper";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
 import { UserContext } from "../../Providers/UserProvider/UserProvider";
+//@ts-ignore
+import { Axios } from "axios";
+import { User } from "../../Types/types";
+const axios = require("axios") as Axios;
 
 type LoginFormValues = {
 	name: string;
@@ -16,18 +20,23 @@ const LoginForm = () => {
 
 	const [isError, setIsError] = useState("");
 
-	const validate = useCallback((values: LoginFormValues) => {
-		if (values.name === "") {
-			setIsError("Name can't be empty");
-		} else {
-			handleSetUser(values.name);
-			handleChangeRoute("/Main");
-		}
+	const login = useCallback((values: LoginFormValues) => {
+		axios
+			.post("http://localhost:8000/Login", {
+				userName: values.name,
+				password: values.password,
+			})
+			.then((response: any) => {
+				const user = response.data as User;
+				handleSetUser(user);
+				handleChangeRoute("/Main");
+			})
+			.catch(() => setIsError("Sorry we can't log you in"));
 	}, []);
 	return (
 		<ReturnWrapper path={"/"}>
 			<Form
-				onSubmit={(value) => validate(value as LoginFormValues)}
+				onSubmit={(value) => login(value as LoginFormValues)}
 				onChange={() => {
 					setIsError("");
 				}}
