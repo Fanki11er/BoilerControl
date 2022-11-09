@@ -32,21 +32,26 @@ const react_1 = __importStar(require("react"));
 const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
+const axios = require("axios");
 const LoginForm = () => {
     const { handleSetUser } = (0, react_1.useContext)(UserProvider_1.UserContext);
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const [isError, setIsError] = (0, react_1.useState)("");
-    const validate = (0, react_1.useCallback)((values) => {
-        if (values.name === "") {
-            setIsError("Name can't be empty");
-        }
-        else {
-            handleSetUser(values.name);
+    const login = (0, react_1.useCallback)((values) => {
+        axios
+            .post("http://localhost:8000/Login", {
+            userName: values.name,
+            password: values.password,
+        })
+            .then((response) => {
+            const user = response.data;
+            handleSetUser(user);
             handleChangeRoute("/Main");
-        }
+        })
+            .catch(() => setIsError("Sorry we can't log you in"));
     }, []);
     return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/" },
-        react_1.default.createElement(ink_form_1.Form, { onSubmit: (value) => validate(value), onChange: () => {
+        react_1.default.createElement(ink_form_1.Form, { onSubmit: (value) => login(value), onChange: () => {
                 setIsError("");
             }, form: {
                 sections: [

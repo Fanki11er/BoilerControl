@@ -32,6 +32,7 @@ const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider"
 const ink_1 = require("ink");
 const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
 const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
+const axios = require("axios");
 const RegisterForm = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { handleSetUser } = (0, react_1.useContext)(UserProvider_1.UserContext);
@@ -41,9 +42,21 @@ const RegisterForm = () => {
             setIsError("Both passwords must be the same");
         }
         else {
-            handleSetUser(values.userName);
-            handleChangeRoute("/Main");
+            register(values);
         }
+    }, []);
+    const register = (0, react_1.useCallback)((values) => {
+        axios
+            .post("http://localhost:8000/Register", {
+            userName: values.userName,
+            password: values.password,
+        })
+            .then((response) => {
+            const user = response.data;
+            handleSetUser(user);
+            handleChangeRoute("/Main");
+        })
+            .catch(() => setIsError("Error"));
     }, []);
     return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/" },
         react_1.default.createElement(ink_form_1.Form, { onSubmit: (values) => validate(values), onChange: () => {

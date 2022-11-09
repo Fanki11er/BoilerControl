@@ -33,21 +33,27 @@ const BoilerProvider_1 = require("../../Providers/BoilerProvider/BoilerProvider"
 const BoilerStatusInfo_1 = __importDefault(require("../../Components/BoilerStatusInfo/BoilerStatusInfo"));
 const BoilerAlarmInfo_1 = __importDefault(require("../../Components/BoilerAlarmInfo/BoilerAlarmInfo"));
 const BoilerControlsPanel_1 = __importDefault(require("../../Components/BoilerControlsPanel/BoilerControlsPanel"));
+const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
 const BoilerInfoView = (props) => {
-    const { boilerParameters } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
+    const { boilerParameters, handleSelectBoiler, error } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
     const { id } = props;
-    return (react_1.default.createElement(ink_1.Box, { width: 120, height: 30, padding: 2, borderStyle: "round", minWidth: 120, flexDirection: "column" }, boilerParameters ? (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(ink_1.Box, null,
-            react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(BoilerStatusInfo_1.default, { status: boilerParameters?.currentStatus }),
-                react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentOutsideTemperature, scale: "C", label: "Outside temperature" }),
-                react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentTemperature, scale: "C", label: "Boiler temperature" }),
-                react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFanSpeed, scale: "%", label: "Fan speed" }))),
-        react_1.default.createElement(ink_1.Box, null,
-            react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelStream, label: "Fuel stream (Kg/h)" }),
-                react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelLevel, scale: "%", label: "Fuel level" }),
-                react_1.default.createElement(BoilerAlarmInfo_1.default, { alarmStatus: boilerParameters.alarm }),
-                react_1.default.createElement(BoilerControlsPanel_1.default, { boilerStatus: boilerParameters.currentStatus, id: id }))))) : (react_1.default.createElement(ink_1.Text, { color: "yellow" }, "Loading..."))));
+    (0, react_1.useEffect)(() => {
+        handleSelectBoiler(id);
+    }, []);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(ink_1.Box, { width: 120, height: 30, padding: 2, borderStyle: "round", minWidth: 120, flexDirection: "column" }, boilerParameters ? (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement(ink_1.Box, null,
+                react_1.default.createElement(react_1.default.Fragment, null,
+                    react_1.default.createElement(BoilerStatusInfo_1.default, { status: boilerParameters?.currentStatus }),
+                    react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentOutsideTemperature, scale: "C", label: "Outside temperature" }),
+                    react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentTemperature, scale: "C", label: "Boiler temperature" }),
+                    react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFanSpeed, scale: "%", label: "Fan speed" }))),
+            react_1.default.createElement(ink_1.Box, null,
+                react_1.default.createElement(react_1.default.Fragment, null,
+                    react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelStream, label: "Fuel stream (Kg/h)" }),
+                    react_1.default.createElement(BoilerInfo_1.default, { amount: boilerParameters?.currentFuelLevel, scale: "%", label: "Fuel level" }),
+                    react_1.default.createElement(BoilerAlarmInfo_1.default, { alarmStatus: boilerParameters.alarm }),
+                    react_1.default.createElement(BoilerControlsPanel_1.default, { boilerStatus: boilerParameters.currentStatus, id: id }))))) : (react_1.default.createElement(ink_1.Text, { color: error ? "red" : "yellow" }, error ? error : "Loading..."))),
+        react_1.default.createElement(ReturnWrapper_1.default, { path: "/Main" })));
 };
 exports.default = BoilerInfoView;

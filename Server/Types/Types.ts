@@ -1,18 +1,20 @@
-export type Routes =
-	| "/"
-	| "/Login"
-	| "/Register"
-	| "/Main"
-	| "/BoilerInfo"
-	| "/Settings"
-	| "/AddBoiler";
+export type BoilerStatus = "Stopped" | "Working" | "Idle";
 
-export type Route = {
-	currentRoute: Routes;
-	payload?: string;
+export type BoilerCurrentParameters = {
+	currentTemperature: number;
+	currentFanSpeed: number;
+	currentFuelLevel: number;
+	alarm: string;
+	currentOutsideTemperature: number;
+	currentFuelStream: number;
+	currentStatus: BoilerStatus;
 };
 
-export type BoilerStatus = "Stopped" | "Working" | "Idle";
+export type BoilerSnapshot = {
+	boilerId: string;
+	boilerSettings: BoilerSettings;
+	boilerCurrentParameters: BoilerInfo;
+};
 
 export type PanelOptions =
 	| "STOP"
@@ -21,11 +23,6 @@ export type PanelOptions =
 	| "REFUEL"
 	| "SETTINGS"
 	| "EXIT";
-
-export type User = {
-	userName: string;
-	userId: number;
-};
 
 export type BoilerInfo = {
 	currentTemperature: number;

@@ -5,7 +5,8 @@
 		"jsx": "react",
 		"esModuleInterop": true,
 		"outDir": "dist",
-		"noUnusedLocals": true
+		"noUnusedLocals": true,
+		"target": "ESNext"
 	},
 	"include": ["source"]
 }

@@ -3,73 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Boiler = void 0;
 const BoilerSettings_1 = require("../BoilerSettings/BoilerSettings");
 class Boiler {
+    id;
+    currentTemperature;
+    currentFanSpeed = 0;
+    currentFuelLevel;
+    alarm = "";
+    currentOutsideTemperature;
+    currentFuelStream = 0;
+    currentStatus = "Stopped";
+    counter = 0;
+    fuelUsed = 0;
+    boilerSettings;
     constructor(id) {
-        Object.defineProperty(this, "id", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "currentTemperature", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "currentFanSpeed", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: 0
-        });
-        Object.defineProperty(this, "currentFuelLevel", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "alarm", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: ""
-        });
-        Object.defineProperty(this, "currentOutsideTemperature", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "currentFuelStream", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: 0
-        });
-        Object.defineProperty(this, "currentStatus", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: "Stopped"
-        });
-        Object.defineProperty(this, "counter", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: 0
-        });
-        Object.defineProperty(this, "fuelUsed", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: 0
-        });
-        Object.defineProperty(this, "boilerSettings", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
         this.id = id;
         this.currentOutsideTemperature = this.randomSetOutsideTemperature();
         this.currentFuelLevel = this.randomSetFuelLevel();

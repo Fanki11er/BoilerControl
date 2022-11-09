@@ -31,7 +31,12 @@ const ReturnWrapper = (props) => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     (0, ink_1.useInput)((input, key) => {
         if (input === "x" && key.ctrl) {
-            handleChangeRoute(path);
+            if (props.parameters) {
+                handleChangeRoute(path, props.parameters);
+            }
+            else {
+                handleChangeRoute(path);
+            }
         }
     });
     return (react_1.default.createElement(ink_1.Box, { flexDirection: "column" },
