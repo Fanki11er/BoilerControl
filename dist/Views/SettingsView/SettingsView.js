@@ -46,8 +46,7 @@ const SettingsView = (props) => {
         });
     }, []);
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
-    //!!Add function for searching boiler by Id or sending request with Id
-    return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/BoilerInfo" }, currentSettings ? (react_1.default.createElement(ink_form_1.Form, { onSubmit: (value) => {
+    return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/BoilerInfo", parameters: id }, currentSettings ? (react_1.default.createElement(ink_form_1.Form, { onSubmit: (value) => {
             handleSettingsChange(value);
             handleChangeRoute("/BoilerInfo", id);
         }, form: {
@@ -67,7 +66,7 @@ const SettingsView = (props) => {
                         },
                         {
                             type: "integer",
-                            name: "hysteresis",
+                            name: "boilerHysteresis",
                             label: "Hysteresis",
                             min: 2,
                             max: 10,

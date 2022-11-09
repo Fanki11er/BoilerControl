@@ -1,5 +1,3 @@
-import { BoilerSettings } from "../Class/BoilerSettings/BoilerSettings";
-
 export type BoilerStatus = "Stopped" | "Working" | "Idle";
 
 export type BoilerCurrentParameters = {
@@ -34,4 +32,19 @@ export type BoilerInfo = {
 	currentFuelStream: number;
 	alarm: string;
 	currentStatus: BoilerStatus;
+};
+
+export type BoilerSettings = {
+	userSettings: {
+		desiredTemperature: number;
+		boilerHysteresis: number;
+	};
+	advancedSettings: {
+		fanSpeed: number;
+		fanSpeedInSupervision: number;
+		supervisionWaitingTime: number;
+		fuelStream: number;
+		fuelBreakTime: number;
+		fuelStreamTime: number;
+	};
 };

@@ -4,9 +4,8 @@ import React, {
 	useEffect,
 	useState,
 } from "react";
-import { BoilerInfo } from "../../Class/Boiler/Boiler";
-import { BoilerSettings } from "../../Class/BoilerSettings/BoilerSettings";
-import { PanelOptions } from "../../Types/types";
+
+import { BoilerInfo, BoilerSettings, PanelOptions } from "../../Types/types";
 //@ts-ignore
 import { Axios } from "axios";
 const axios = require("axios") as Axios;
@@ -25,7 +24,15 @@ export const BoilerContext = createContext({
 	handleSelectBoiler: (boilerId: string) => {
 		boilerId;
 	},
+	handleGetBoilersList: (userId: number): Promise<any> | null => {
+		userId;
+		return null;
+	},
 
+	handleAddBoiler: (userId: number, boilerId: string): void => {
+		userId;
+		boilerId;
+	},
 	error: "",
 });
 
@@ -57,13 +64,6 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		}
 	};
 
-	/*const handleBoilerControl = useCallback((status: PanelOptions) => {
-		if (boiler && status === "RESET") {
-			boiler.resetAlarms();
-		} else if (boiler) {
-			boiler.changeStatus(status);
-		}
-	}, []);*/
 	const handleBoilerControl = (status: PanelOptions) => {
 		axios
 			.post("http://localhost:8000/SetStatus", {
@@ -100,6 +100,30 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			});
 	};
 
+	const handleGetBoilersList = async (userId: number) => {
+		return await axios
+			.post("http://localhost:8000/GetBoilersList", {
+				id: userId,
+			})
+			.then((response: any) => {
+				return response.data as string[];
+			})
+			.catch(() => {
+				setError("Get boilers list error");
+			});
+	};
+
+	const handleAddBoiler = (userId: number, boilerId: string) => {
+		axios
+			.post("http://localhost:8000/AddBoiler", {
+				id: userId,
+				boilerId,
+			})
+			.catch(() => {
+				setError("Get boilers list error");
+			});
+	};
+
 	useEffect(() => {
 		let interval: NodeJS.Timer;
 		if (selectedBoilerId) {
@@ -119,6 +143,8 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		handleBoilerControl,
 		handleGetBoilerSettings,
 		handleSelectBoiler,
+		handleGetBoilersList,
+		handleAddBoiler,
 		error,
 	};
 
@@ -130,54 +156,3 @@ const BoilerProvider = (props: PropsWithChildren) => {
 };
 
 export default BoilerProvider;
-
-/*
-
-const BoilerProvider = (props: PropsWithChildren) => {
-	const [boilerParameters, setBoilerParameters] = useState<BoilerStatus>(null);
-
-	const { current: boiler } = useRef(new Boiler("B1"));
-
-	const handleChangeParameters = useCallback(() => {
-		setBoilerParameters(boiler.getBoilerParameters());
-	}, []);
-
-	const handleBoilerControl = useCallback((status: PanelOptions) => {
-		if (boiler && status === "RESET") {
-			boiler.resetAlarms();
-		} else if (boiler) {
-			boiler.changeStatus(status);
-		}
-	}, []);
-
-	const handleSettingsChange = useCallback((settings: any) => {
-		boiler.setBoilerSettings(settings);
-	}, []);
-
-	const handleGetBoilerSettings = useCallback(() => {
-		return boiler.getBoilerSettings();
-	}, []);
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			handleChangeParameters();
-		}, 500);
-
-		return () => {
-			return clearInterval(interval);
-		};
-	}, []);
-
-	const context = {
-		boilerParameters,
-		handleSettingsChange,
-		handleBoilerControl,
-		handleGetBoilerSettings,
-	};
-
-	return (
-		<BoilerContext.Provider value={context}>
-			{props.children}
-		</BoilerContext.Provider>
-	);
-};*/

@@ -1,10 +1,10 @@
 import { Text } from "ink";
 import { Form } from "ink-form";
 import React, { useContext, useEffect, useState } from "react";
-import { BoilerSettings } from "../../Class/BoilerSettings/BoilerSettings";
 import ReturnWrapper from "../../Components/ReturnWrapper/ReturnWrapper";
 import { BoilerContext } from "../../Providers/BoilerProvider/BoilerProvider";
 import { RoutesContext } from "../../Providers/RoutesProvider/RoutesProvider";
+import { BoilerSettings } from "../../Types/types";
 
 type Props = {
 	id: string;
@@ -31,9 +31,8 @@ const SettingsView = (props: Props) => {
 
 	const { handleChangeRoute } = useContext(RoutesContext);
 
-	//!!Add function for searching boiler by Id or sending request with Id
 	return (
-		<ReturnWrapper path={"/BoilerInfo"}>
+		<ReturnWrapper path={"/BoilerInfo"} parameters={id}>
 			{currentSettings ? (
 				<Form
 					onSubmit={(value) => {
@@ -58,7 +57,7 @@ const SettingsView = (props: Props) => {
 									},
 									{
 										type: "integer",
-										name: "hysteresis",
+										name: "boilerHysteresis",
 										label: "Hysteresis",
 										min: 2,
 										max: 10,

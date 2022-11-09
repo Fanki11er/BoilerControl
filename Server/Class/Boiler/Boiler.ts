@@ -9,13 +9,6 @@ import { BoilerSettings } from "../BoilerSettings/BoilerSettings";
 
 export class Boiler {
 	private id;
-	/*private currentTemperature: number;
-	private currentFanSpeed = 0;
-	private currentFuelLevel: number;
-	private alarm = "";
-	private currentOutsideTemperature: number;
-	private currentFuelStream = 0;
-	private currentStatus: BoilerStatus = "Stopped";*/
 	private counter = 0;
 	private fuelUsed = 0;
 
@@ -37,8 +30,11 @@ export class Boiler {
 	}
 
 	private reCreateFromSnapshot = (snapshot: BoilerSnapshot) => {
+		this.boilerSettings = new BoilerSettings(
+			snapshot.boilerSettings.userSettings,
+			snapshot.boilerSettings.advancedSettings
+		);
 		this.boilerParameters = snapshot.boilerCurrentParameters;
-		this.boilerSettings = snapshot.boilerSettings;
 		this.id = snapshot.boilerId;
 	};
 
@@ -91,9 +87,9 @@ export class Boiler {
 			fuelBreakTime,
 			fuelStreamTime
 		);
-
+		const status = this.boilerParameters.currentStatus as PanelOptions;
 		this.stopBoiler();
-		this.startBoiler();
+		this.changeStatus(status);
 	}
 
 	setFuelLevel(newFuelLevel: number) {

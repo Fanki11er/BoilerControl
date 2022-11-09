@@ -1,5 +1,6 @@
 import fs from "fs";
 import { BoilerSnapshot } from "../../Types/Types";
+import { Boiler } from "../Boiler/Boiler";
 import { User } from "../User/User";
 
 const BOILER_SNAPSHOTS_PATH = "./Data/BoilersSnapshots.data";
@@ -8,11 +9,12 @@ const USERS_PATH = "./Data/Users.data";
 export class Database {
 	private users: User[] = [];
 	private boilersSnapshots: BoilerSnapshot[] = [];
+	private boilers;
 
-	constructor() {
-		this.loadBoilersSnapshots(BOILER_SNAPSHOTS_PATH);
+	constructor(boilers: Boiler[]) {
+		this.boilers = boilers;
 		this.loadUsers(USERS_PATH);
-		console.log("Loaded", this.users);
+		this.loadBoilersSnapshots(BOILER_SNAPSHOTS_PATH);
 	}
 
 	private readFile = (filePath: string, info: string = "") => {
@@ -37,12 +39,30 @@ export class Database {
 
 	private loadBoilersSnapshots = (path: string) => {
 		const snapshot = this.readFile(path);
-		const data = JSON.parse(snapshot) as BoilerSnapshot[];
+
+		if (snapshot) {
+			const data = JSON.parse(snapshot) as BoilerSnapshot[];
+
+			data.forEach((element) => {
+				this.boilers.push(new Boiler(element.boilerId, element));
+			});
+		} else
+			this.users.forEach((user) => {
+				user.boilersIds.forEach((id) => {
+					this.boilers.push(new Boiler(id));
+				});
+			});
 	};
 
-	private saveBoilersSnapshots = (path: string) => {
-		const snapshots = JSON.stringify(this.boilersSnapshots);
-		this.saveToFile(path, snapshots);
+	public saveBoilersSnapshots = (path: string) => {
+		this.boilersSnapshots = [];
+		this.boilers.forEach((boiler) => {
+			this.boilersSnapshots.push(boiler.exportSnapshot());
+		});
+		if (this.boilersSnapshots.length) {
+			const snapshots = JSON.stringify(this.boilersSnapshots);
+			this.saveToFile(path, snapshots);
+		}
 	};
 
 	private saveUsersSnapshot = () => {
@@ -57,12 +77,13 @@ export class Database {
 		const snapshot = this.readFile(path);
 		if (snapshot) {
 			const data = JSON.parse(snapshot) as User[];
-			this.users = data;
+
+			this.users.push(...data);
 		}
 	};
 
 	private createUserIndex = () => {
-		return (this.users.length += 1);
+		return this.users.length + 1;
 	};
 
 	//!! Make password hash
@@ -76,7 +97,6 @@ export class Database {
 		const userIndex = this.users.push(
 			new User(this.createUserIndex(), name, password)
 		);
-
 		this.saveUsersSnapshot();
 		return {
 			userName: this.users[userIndex - 1].userName,
@@ -124,9 +144,16 @@ export class Database {
 
 	addNewUserBoiler(userId: number, boilerId: string) {
 		const userIndex = this.findUserById(userId);
+		const boilerIndex = this.users.findIndex((user) => {
+			return user.boilersIds.find((id) => {
+				return id === boilerId;
+			});
+		});
 
-		if (userIndex >= 0) {
+		if (userIndex >= 0 && boilerIndex < 0) {
 			this.users[userIndex].boilersIds.push(boilerId);
+
+			this.saveUsersSnapshot();
 			return true;
 		}
 		return false;

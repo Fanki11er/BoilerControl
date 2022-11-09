@@ -12,6 +12,13 @@ export class BoilerSettings {
 		fuelStreamTime: 10,
 	};
 
+	constructor(userSettings?: any, advancedSettings?: any) {
+		if (userSettings && advancedSettings) {
+			this.userSettings = userSettings;
+			this.advancedSettings = advancedSettings;
+		}
+	}
+
 	setUserSettings(desiredTemperature: number, boilerHysteresis: number) {
 		this.userSettings.desiredTemperature = desiredTemperature;
 		this.userSettings.boilerHysteresis = boilerHysteresis;

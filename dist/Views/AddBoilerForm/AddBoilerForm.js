@@ -30,12 +30,16 @@ const react_1 = __importStar(require("react"));
 const ink_form_1 = require("ink-form");
 const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider");
 const ReturnWrapper_1 = __importDefault(require("../../Components/ReturnWrapper/ReturnWrapper"));
+const BoilerProvider_1 = require("../../Providers/BoilerProvider/BoilerProvider");
+const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
 const AddBoilerForm = () => {
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
-    const handleSubmit = (0, react_1.useCallback)((values) => {
-        values;
+    const { handleAddBoiler } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
+    const { user } = (0, react_1.useContext)(UserProvider_1.UserContext);
+    const handleSubmit = (values) => {
+        user && handleAddBoiler(user.userId, values.boilerId);
         handleChangeRoute("/Main");
-    }, []);
+    };
     return (react_1.default.createElement(ReturnWrapper_1.default, { path: "/Main" },
         react_1.default.createElement(ink_form_1.Form, { onSubmit: (values) => handleSubmit(values), form: {
                 title: "",

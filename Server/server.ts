@@ -3,35 +3,24 @@ import { Boiler } from "./Class/Boiler/Boiler";
 import { Database } from "./Class/Database/Database";
 import http from "http";
 import bodyParser from "body-parser";
-import { BoilerStatus, PanelOptions } from "./Types/Types";
+import { PanelOptions } from "./Types/Types";
 import { BoilerSettings } from "./Class/BoilerSettings/BoilerSettings";
+const BOILER_SNAPSHOTS_PATH = "./Data/BoilersSnapshots.data";
 
 const app = express();
-//app.use(express.json);
+
 const server = http.createServer(app);
-//const jsonParser = bodyParser.json();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const boilers: Boiler[] = [new Boiler("B1")];
-//boilers.push(new Boiler("B1"));
-const base = new Database();
-//base.makeSnapshot(boilers[0].exportSnapshot());
+const boilers: Boiler[] = [];
 
-/*app.get("/Register", (req, res) => {
-	//const data = req.body;
-	//console.log("GEt", data);
-	res.send("hello world");
+const base = new Database(boilers);
 
-	/*if (base.addNewUser("Test", "QWERTY")) {
-		const logged = base.loginUser("Test", "QWERTY");
-		if (logged) {
-			res.send(logged);
-		}
-	}*/
-
-//res.send(null);
-//});
+setInterval(() => {
+	base.saveBoilersSnapshots(BOILER_SNAPSHOTS_PATH);
+}, 60000);
 
 const findBoilerById = (id: string) => {
 	return boilers.findIndex((boiler) => {
@@ -120,19 +109,29 @@ app.post("/SetSettings", async (req, res) => {
 	res.sendStatus(400);
 });
 
-/*app.get("/async", async (req, res) => {
-	try {
-		const response = await axios({
-			url: "users",
-			method: "get",
-		});
-		res.status(200).json(response.data);
-	} catch (err) {
-		res.status(500).json({ message: err });
-	}
-});*/
+app.post("/GetBoilersList", async (req, res) => {
+	const id = req.body.id;
 
-server.listen(8000, () => {
-	//readFile("./Data/test.txt");
-	//base.saveToFile("./Data/test.txt", JSON.stringify(boilers));
+	if (id) {
+		res.json(base.getUserBoilersIds(id));
+		return;
+	}
+
+	res.sendStatus(400);
 });
+
+app.post("/AddBoiler", async (req, res) => {
+	const id = req.body.id;
+	const boilerId = req.body.boilerId;
+
+	if (id && boilerId) {
+		if (base.addNewUserBoiler(id, boilerId)) {
+			boilers.push(new Boiler(boilerId));
+			return;
+		}
+	}
+
+	res.sendStatus(400);
+});
+
+server.listen(8000, () => {});

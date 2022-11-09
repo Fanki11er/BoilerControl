@@ -32,17 +32,37 @@ const RoutesProvider_1 = require("../../Providers/RoutesProvider/RoutesProvider"
 const UserProvider_1 = require("../../Providers/UserProvider/UserProvider");
 const Indicator_1 = __importDefault(require("../../Components/Indicator/Indicator"));
 const ListItem_1 = __importDefault(require("../../Components/ListItem/ListItem"));
-const fakeData_1 = require("../../FakeData/fakeData");
 const ink_1 = require("ink");
+const BoilerProvider_1 = require("../../Providers/BoilerProvider/BoilerProvider");
 const MainPage = () => {
+    const [boilersList, setBoilersList] = (0, react_1.useState)([]);
     const { handleChangeRoute } = (0, react_1.useContext)(RoutesProvider_1.RoutesContext);
     const { user } = (0, react_1.useContext)(UserProvider_1.UserContext);
+    const { handleGetBoilersList } = (0, react_1.useContext)(BoilerProvider_1.BoilerContext);
     (0, react_1.useEffect)(() => {
         if (!user) {
             handleChangeRoute("/Login");
-            //return null;
         }
-    });
+    }, [user]);
+    (0, react_1.useEffect)(() => {
+        user &&
+            handleGetBoilersList(user?.userId)
+                ?.then((data) => {
+                setBoilersList([...data]);
+            })
+                .catch((e) => {
+                console.log(e);
+                //!! Set error
+            });
+    }, []);
+    const convertToItems = (boilersList) => {
+        return boilersList.map((item) => {
+            return {
+                label: `Boiler: ${item}`,
+                value: item,
+            };
+        });
+    };
     const handleSelect = (item) => {
         if (item.value.match(/B\d/)) {
             handleChangeRoute("/BoilerInfo", item.value);
@@ -67,6 +87,6 @@ const MainPage = () => {
     return (react_1.default.createElement(ink_1.Box, { alignItems: "center", flexDirection: "column" },
         react_1.default.createElement(ink_1.Text, { color: "greenBright" }, "Select boiler"),
         react_1.default.createElement(ink_1.Box, { borderColor: "white", borderStyle: "round", padding: 2, width: 100 },
-            react_1.default.createElement(SelectInput_1.default, { itemComponent: ListItem_1.default, items: [...fakeData_1.items, ...buttons], indicatorComponent: Indicator_1.default, onSelect: (item) => handleSelect(item) }))));
+            react_1.default.createElement(SelectInput_1.default, { itemComponent: ListItem_1.default, items: [...convertToItems(boilersList), ...buttons], indicatorComponent: Indicator_1.default, onSelect: (item) => handleSelect(item) }))));
 };
 exports.default = MainPage;

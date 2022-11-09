@@ -5,6 +5,7 @@ import { Routes } from "../../Types/types";
 
 type Props = {
 	path: Routes;
+	parameters?: string;
 };
 
 const ReturnWrapper = (props: PropsWithChildren & Props) => {
@@ -14,7 +15,11 @@ const ReturnWrapper = (props: PropsWithChildren & Props) => {
 
 	useInput((input, key) => {
 		if (input === "x" && key.ctrl) {
-			handleChangeRoute(path);
+			if (props.parameters) {
+				handleChangeRoute(path, props.parameters);
+			} else {
+				handleChangeRoute(path);
+			}
 		}
 	});
 	return (
