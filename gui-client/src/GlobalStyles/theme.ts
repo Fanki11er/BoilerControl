@@ -9,10 +9,15 @@ export const theme: Theme = {
 		blueGray: "rgba(148, 175, 211, 1)",
 		darkerBlue: "rgba(2, 40, 115, 1)",
 		darkBlue: "rgba(2, 31, 89, 1)",
+		transparentGreen: "rgba(131, 179, 59, 0.5)",
 	},
+
 	fontSizes: {
 		smallDevices: {},
-		mediumDevices: {},
+		mediumDevices: {
+			normal: "1em",
+			medium: "1.2em",
+		},
 		largeDevices: {},
 	},
 
@@ -30,6 +35,7 @@ export type Theme = {
 		backgroundBlue: string;
 		lightBlue: string;
 		green: string;
+		transparentGreen: string;
 		lightYellow: string;
 		orange: string;
 		red: string;
@@ -39,7 +45,10 @@ export type Theme = {
 	};
 	fontSizes: {
 		smallDevices: {};
-		mediumDevices: {};
+		mediumDevices: {
+			normal: string;
+			medium: string;
+		};
 		largeDevices: {};
 	};
 
