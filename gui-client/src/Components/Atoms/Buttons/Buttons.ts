@@ -16,6 +16,10 @@ export const BlueButton = styled.button`
 		color: ${(props: StyledTheme) => props.theme.colors.backgroundBlue};
 		background-color: ${(props: StyledTheme) => props.theme.colors.lightBlue};
 	}
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const GreenMediumButton = styled(BlueButton)`

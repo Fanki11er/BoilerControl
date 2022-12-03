@@ -1,9 +1,12 @@
+import { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { useState } from "react";
-import {
-	GreenMediumButton,
-	YellowMediumButton,
-} from "../../Atoms/Buttons/Buttons";
+import { useNavigate } from "react-router-dom";
+import axios from "../../../Api/axios";
+import { apiEndpoints } from "../../../Api/endpoints";
+import { routes } from "../../../Routes/routes";
+import { User } from "../../../Types/types";
+import { GreenMediumButton } from "../../Atoms/Buttons/Buttons";
 import {
 	DefaultFormHeader,
 	DefaultFormWrapper,
@@ -19,17 +22,43 @@ type MyFormValues = {
 };
 
 const LoginForm = () => {
+	const navigate = useNavigate();
+	const { boilersList } = routes;
+	const { loginEndpoint } = apiEndpoints;
 	const initialValues: MyFormValues = {
 		userName: "",
 		password: "",
 	};
 
 	const [isError, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
+	const [isConnecting, setIsConnecting] = useState(false);
 
-	const handleSubmit = (values: MyFormValues) => {};
+	const handleSubmit = (values: MyFormValues) => {
+		axios
+			.post(loginEndpoint, {
+				userName: values.userName,
+				password: values.password,
+			})
+			.then((response: AxiosResponse) => {
+				const user = response.data as User;
+				//handleSetUser(user);
+				console.log(user);
+
+				navigate(boilersList);
+			})
+			.catch((e: AxiosError) => {
+				setError(e.message);
+			});
+		setIsConnecting(false);
+	};
 	return (
-		<Formik initialValues={initialValues} onSubmit={handleSubmit}>
+		<Formik
+			initialValues={initialValues}
+			onSubmit={(values, action) => {
+				handleSubmit(values);
+				action.setSubmitting(false);
+			}}
+		>
 			<DefaultFormWrapper>
 				<DefaultFormHeader>Login</DefaultFormHeader>
 				{isError ? <DefaultFormError>{isError}</DefaultFormError> : null}
@@ -47,12 +76,11 @@ const LoginForm = () => {
 					label={"Password"}
 				/>
 
-				{isLoading ? (
+				{isConnecting ? (
 					<Loader />
 				) : (
 					<FormButtonsWrapper>
-						<GreenMediumButton>Register</GreenMediumButton>
-						<YellowMediumButton>Login</YellowMediumButton>
+						<GreenMediumButton type={"submit"}>Login</GreenMediumButton>
 					</FormButtonsWrapper>
 				)}
 			</DefaultFormWrapper>

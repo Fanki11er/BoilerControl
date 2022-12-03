@@ -14,14 +14,14 @@ export const LongInputFieldWrapper = styled.div`
 export const LongFieldLabel = styled.label`
 	display: flex;
 	justify-self: flex-start;
-	color: ${(props: StyledTheme) => props.theme.colors.lightBlue};
+	color: ${(props: StyledTheme) => props.theme.colors.green};
 	font-size: ${(props: StyledTheme) =>
 		props.theme.fontSizes.mediumDevices.medium};
 `;
 
 export const LongFieldInput = styled(Field)`
 	outline: none;
-	border: 2px solid ${(props: StyledTheme) => props.theme.colors.green};
+	border: 2px solid ${(props: StyledTheme) => props.theme.colors.lightBlue};
 	border-radius: 10px;
 	padding: 10px 20px;
 	background-color: transparent;

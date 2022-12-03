@@ -4,5 +4,5 @@ export const FormButtonsWrapper = styled.div`
 	margin-top: 20px;
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 `;

@@ -5,11 +5,11 @@ import { StyledTheme } from "../../../GlobalStyles/theme";
 export const DefaultFormWrapper = styled(Form)`
 	width: 600px;
 	padding: 50px 80px;
-	border: 2px solid ${(props: StyledTheme) => props.theme.colors.green};
+	border: 2px solid ${(props: StyledTheme) => props.theme.colors.lightBlue};
 	display: grid;
 	grid-template-columns: 100%;
 	grid-auto-rows: auto;
-	row-gap: 45px;
+	row-gap: 30px;
 	justify-items: center;
 	border-radius: 15px;
 `;
