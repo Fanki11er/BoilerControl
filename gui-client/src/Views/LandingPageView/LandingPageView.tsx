@@ -11,7 +11,7 @@ const LandingPageView = () => {
 		<LandingPageViewWrapper>
 			<LandingPageAppTitle src={AppTitleImage} alt={"Application title"} />
 			<LandingPageButtonsWrapper>
-				<BlueButton>Sign in</BlueButton>
+				<BlueButton>Login</BlueButton>
 				<BlueButton>Register</BlueButton>
 			</LandingPageButtonsWrapper>
 		</LandingPageViewWrapper>

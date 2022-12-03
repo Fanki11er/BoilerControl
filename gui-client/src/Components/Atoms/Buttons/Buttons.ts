@@ -31,3 +31,13 @@ export const GreenMediumButton = styled(BlueButton)`
 		background-color: ${(props: StyledTheme) => props.theme.colors.green};
 	}
 `;
+
+export const YellowMediumButton = styled(GreenMediumButton)`
+	border: 2px solid ${(props: StyledTheme) => props.theme.colors.lightYellow};
+	color: ${(props: StyledTheme) => props.theme.colors.lightYellow};
+
+	:hover {
+		color: ${(props: StyledTheme) => props.theme.colors.backgroundBlue};
+		background-color: ${(props: StyledTheme) => props.theme.colors.lightYellow};
+	}
+`;

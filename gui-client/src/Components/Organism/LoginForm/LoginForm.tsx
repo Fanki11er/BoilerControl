@@ -11,20 +11,19 @@ import {
 import { DefaultFormError } from "../../Atoms/DefaultFormError/DefaultFormError";
 import Loader from "../../Molecules/Loader/Loader";
 import LongInputField from "../../Molecules/LongInputField/LongInputField";
-import { FormButtonsWrapper } from "./RegistrationForm.styles";
+import { FormButtonsWrapper } from "./LoginForm.styles";
 
 type MyFormValues = {
 	userName: string;
 	password: string;
-	repeatedPassword: string;
 };
 
-const RegistrationForm = () => {
+const LoginForm = () => {
 	const initialValues: MyFormValues = {
 		userName: "",
 		password: "",
-		repeatedPassword: "",
 	};
+
 	const [isError, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -32,7 +31,7 @@ const RegistrationForm = () => {
 	return (
 		<Formik initialValues={initialValues} onSubmit={handleSubmit}>
 			<DefaultFormWrapper>
-				<DefaultFormHeader>Registration</DefaultFormHeader>
+				<DefaultFormHeader>Login</DefaultFormHeader>
 				{isError ? <DefaultFormError>{isError}</DefaultFormError> : null}
 				<LongInputField
 					name={"userName"}
@@ -47,18 +46,13 @@ const RegistrationForm = () => {
 					placeholder={"Password"}
 					label={"Password"}
 				/>
-				<LongInputField
-					name={"repeatedPassword"}
-					type={"password"}
-					placeholder={"Repeated password"}
-					label={"Repeated password"}
-				/>
+
 				{isLoading ? (
 					<Loader />
 				) : (
 					<FormButtonsWrapper>
-						<GreenMediumButton>Login</GreenMediumButton>
-						<YellowMediumButton>Register</YellowMediumButton>
+						<GreenMediumButton>Register</GreenMediumButton>
+						<YellowMediumButton>Login</YellowMediumButton>
 					</FormButtonsWrapper>
 				)}
 			</DefaultFormWrapper>
@@ -66,4 +60,4 @@ const RegistrationForm = () => {
 	);
 };
 
-export default RegistrationForm;
+export default LoginForm;

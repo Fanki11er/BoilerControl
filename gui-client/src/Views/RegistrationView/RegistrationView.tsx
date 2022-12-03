@@ -1,11 +1,11 @@
+import { DefaultViewWrapper } from "../../Components/Atoms/DefaultViewWrapper/DefaultViewWrapper";
 import RegistrationForm from "../../Components/Organism/RegistrationForm/RegistrationForm";
-import { RegistrationViewWrapper } from "./RegistrationView.styles";
 
 const RegistrationView = () => {
 	return (
-		<RegistrationViewWrapper>
+		<DefaultViewWrapper>
 			<RegistrationForm />
-		</RegistrationViewWrapper>
+		</DefaultViewWrapper>
 	);
 };
 

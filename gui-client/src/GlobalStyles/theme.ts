@@ -10,6 +10,7 @@ export const theme: Theme = {
 		darkerBlue: "rgba(2, 40, 115, 1)",
 		darkBlue: "rgba(2, 31, 89, 1)",
 		transparentGreen: "rgba(131, 179, 59, 0.5)",
+		pink: "rgba(232,169,169, 1)",
 	},
 
 	fontSizes: {
@@ -42,6 +43,7 @@ export type Theme = {
 		blueGray: string;
 		darkerBlue: string;
 		darkBlue: string;
+		pink: string;
 	};
 	fontSizes: {
 		smallDevices: {};
