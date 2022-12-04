@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useBoilers from "../../../Hooks/useBoilers";
 import { routes } from "../../../Routes/routes";
 import Loader from "../../Molecules/Loader/Loader";
@@ -11,15 +11,16 @@ import {
 } from "./BoilersList.styles";
 
 const BoilersList = () => {
-	const { addBoiler } = routes;
+	const { addBoiler, controlPanel } = routes;
 	const { boilersList, isLoading, error } = useBoilers();
+	const navigate = useNavigate();
 
 	const renderBoilersListElements = (boilersList: string[]) => {
 		return boilersList.map((boiler) => {
 			return (
 				<BoilersListElement
 					key={boiler}
-					onClick={() => console.log(boiler)}
+					onClick={() => navigate(controlPanel)}
 				>{`Boiler: ${boiler}`}</BoilersListElement>
 			);
 		});

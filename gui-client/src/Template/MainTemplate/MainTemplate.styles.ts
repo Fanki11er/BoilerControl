@@ -6,7 +6,7 @@ export const MainTemplateWrapper = styled.div`
 	min-height: 100vh;
 	display: grid;
 	grid-template-columns: 100%;
-	grid-auto-rows: auto;
+	grid-template-rows: auto 1fr;
 	justify-content: center;
 	background-color: ${(props: StyledTheme) =>
 		props.theme.colors.backgroundBlue};

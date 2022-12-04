@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BoilerInfo from "./Components/Organism/BoilerInfo/BoilerInfo";
 import UserProvider from "./Providers/UserProvider/UserProvider";
 import { routes } from "./Routes/routes";
 import MainTemplate from "./Template/MainTemplate/MainTemplate";
@@ -8,7 +9,7 @@ import LandingPageView from "./Views/LandingPageView/LandingPageView";
 import LoginView from "./Views/LoginView/LoginView";
 import RegistrationView from "./Views/RegistrationView/RegistrationView";
 const App = () => {
-	const { index, register, login, boilersList } = routes;
+	const { index, register, login, boilersList, controlPanel } = routes;
 	return (
 		<UserProvider>
 			<BrowserRouter>
@@ -19,6 +20,7 @@ const App = () => {
 						<Route path={login} element={<LoginView />} />
 						<Route element={<AuthView />}>
 							<Route path={boilersList} element={<BoilersListView />} />
+							<Route path={controlPanel} element={<BoilerInfo />} />
 						</Route>
 					</Route>
 					<Route path={"*"} element={<LandingPageView />} />
