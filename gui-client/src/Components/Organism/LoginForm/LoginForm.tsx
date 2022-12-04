@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../Api/axios";
 import { apiEndpoints } from "../../../Api/endpoints";
+import useUser from "../../../Hooks/useUser";
 import { routes } from "../../../Routes/routes";
 import { User } from "../../../Types/types";
 import { GreenMediumButton } from "../../Atoms/Buttons/Buttons";
@@ -23,8 +24,12 @@ type MyFormValues = {
 
 const LoginForm = () => {
 	const navigate = useNavigate();
+	const { handleSetUser, user } = useUser();
 	const { boilersList } = routes;
 	const { loginEndpoint } = apiEndpoints;
+	if (user) {
+		navigate(boilersList);
+	}
 	const initialValues: MyFormValues = {
 		userName: "",
 		password: "",
@@ -41,8 +46,7 @@ const LoginForm = () => {
 			})
 			.then((response: AxiosResponse) => {
 				const user = response.data as User;
-				//handleSetUser(user);
-				console.log(user);
+				handleSetUser(user);
 
 				navigate(boilersList);
 			})
