@@ -8,7 +8,6 @@ export const MainTemplateWrapper = styled.div`
 	grid-template-columns: 100%;
 	grid-auto-rows: auto;
 	justify-content: center;
-	//align-items: center;
 	background-color: ${(props: StyledTheme) =>
 		props.theme.colors.backgroundBlue};
 `;

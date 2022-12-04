@@ -1,5 +1,8 @@
-import { LoaderImg, LoaderWrapper } from "./Loader.styles";
 import LoaderImage from "../../../Assets/Earth.svg";
+import {
+	LoaderImg,
+	LoaderWrapper,
+} from "../../Atoms/LoaderWrapper/LoaderWrapper";
 
 const Loader = () => {
 	return (

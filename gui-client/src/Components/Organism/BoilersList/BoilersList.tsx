@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useBoilers from "../../../Hooks/useBoilers";
 import { routes } from "../../../Routes/routes";
 import Loader from "../../Molecules/Loader/Loader";
+import LoadingError from "../../Molecules/LoadingError/LoadingError";
 import {
 	BoilersListElement,
 	BoilersListHeader,
@@ -23,12 +24,11 @@ const BoilersList = () => {
 			);
 		});
 	};
-	return isLoading ? (
+	return error ? (
+		<LoadingError />
+	) : isLoading ? (
 		<Loader />
-	) : error ? (
-		<div>Error</div>
 	) : (
-		//!!AddError
 		<>
 			<BoilersListHeader>Select boiler</BoilersListHeader>
 			<BoilersListWrapper>

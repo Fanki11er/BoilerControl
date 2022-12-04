@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { StyledTheme } from "../../../GlobalStyles/theme";
 
 export const BoilersListWrapper = styled.ul`
-	width: 300px;
+	width: 350px;
 	height: 400px;
 	list-style: none;
-	padding: 30px 20px;
+	padding: 40px;
 	border: 2px solid ${(props: StyledTheme) => props.theme.colors.green};
 	border-radius: 15px;
 	display: grid;
