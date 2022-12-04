@@ -2,6 +2,7 @@ import express from "express";
 import { Boiler } from "./Class/Boiler/Boiler";
 import { Database } from "./Class/Database/Database";
 import http from "http";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { PanelOptions } from "./Types/Types";
 import { BoilerSettings } from "./Class/BoilerSettings/BoilerSettings";
@@ -13,6 +14,7 @@ const server = http.createServer(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const boilers: Boiler[] = [];
 

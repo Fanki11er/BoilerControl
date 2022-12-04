@@ -12,9 +12,11 @@ export const BlueButton = styled.button`
 	font-size: ${(props: StyledTheme) =>
 		props.theme.fontSizes.mediumDevices.medium};
 	transition: all 0.5s;
+	cursor: pointer;
 	:hover {
 		color: ${(props: StyledTheme) => props.theme.colors.backgroundBlue};
 		background-color: ${(props: StyledTheme) => props.theme.colors.lightBlue};
+		font-weight: bold;
 	}
 	text-decoration: none;
 	display: flex;

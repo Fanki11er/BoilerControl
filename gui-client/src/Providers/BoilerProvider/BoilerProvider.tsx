@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import axios from "../../Api/axios";
 import { apiEndpoints } from "../../Api/endpoints";
+import useUser from "../../Hooks/useUser";
 
 import { BoilerInfo, BoilerSettings, PanelOptions } from "../../Types/types";
 
@@ -19,6 +20,8 @@ export const BoilerContext = createContext({
 
 	handleAddBoiler: (userId: number, boilerId: string): void => {},
 	error: "",
+	isLoading: false,
+	boilersList: [] as string[],
 });
 
 type BoilerStatus = BoilerInfo | null;
@@ -32,9 +35,18 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		getBoilersList,
 		addBoiler,
 	} = apiEndpoints;
+	const { user } = useUser();
+	const [boilersList, setBoilersList] = useState<string[]>([]);
 	const [selectedBoilerId, setSelectedBoilerId] = useState<string | null>(null);
 	const [boilerParameters, setBoilerParameters] = useState<BoilerStatus>(null);
 	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		user && handleGetBoilersList(user?.userId);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
 	const handleSelectBoiler = (boilerId: string) => {
 		setBoilerParameters(null);
@@ -58,29 +70,31 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	};
 
 	const handleBoilerControl = (status: PanelOptions) => {
+		setIsLoading(true);
 		axios
 			.post(setStatus, {
 				status,
 				id: selectedBoilerId,
 			})
 			.then(() => {})
-			.catch(() => setError("Error setting status"));
-		//! Add Error info
+			.catch(() => setError("Error setting status"))
+			.finally(() => setIsLoading(false));
 	};
 
 	const handleSettingsChange = (settings: any) => {
-		//boiler.setBoilerSettings(settings);
+		setIsLoading(true);
 		axios
 			.post(setSettings, {
 				id: selectedBoilerId,
 				settings,
 			})
 			.then(() => {})
-			.catch(() => setError("Setting new settings error"));
-		//! Add Error info
+			.catch(() => setError("Setting new settings error"))
+			.finally(() => setIsLoading(false));
 	};
 
 	const handleGetBoilerSettings = async () => {
+		setIsLoading(true);
 		return await axios
 			.post(getSettings, {
 				id: selectedBoilerId,
@@ -90,10 +104,12 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			})
 			.catch(() => {
 				setError("Get settings error");
-			});
+			})
+			.finally(() => setIsLoading(false));
 	};
 
-	const handleGetBoilersList = async (userId: number) => {
+	/*const handleGetBoilersList = async (userId: number) => {
+		setIsLoading(true);
 		return await axios
 			.post(getBoilersList, {
 				id: userId,
@@ -103,10 +119,28 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			})
 			.catch(() => {
 				setError("Get boilers list error");
-			});
+			})
+			.finally(() => setIsLoading(false));
+	};*/
+
+	const handleGetBoilersList = async (userId: number) => {
+		setIsLoading(true);
+		await axios
+			.post(getBoilersList, {
+				id: userId,
+			})
+			.then((response: AxiosResponse) => {
+				const data = response.data as string[];
+				setBoilersList(data);
+			})
+			.catch(() => {
+				setError("Get boilers list error");
+			})
+			.finally(() => setIsLoading(false));
 	};
 
 	const handleAddBoiler = (userId: number, boilerId: string) => {
+		setIsLoading(true);
 		axios
 			.post(addBoiler, {
 				id: userId,
@@ -114,7 +148,8 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			})
 			.catch(() => {
 				setError("Get boilers list error");
-			});
+			})
+			.finally(() => setIsLoading(false));
 	};
 
 	useEffect(() => {
@@ -128,6 +163,8 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		return () => {
 			return clearInterval(interval);
 		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedBoilerId]);
 
 	const context = {
@@ -139,6 +176,8 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		handleGetBoilersList,
 		handleAddBoiler,
 		error,
+		isLoading,
+		boilersList,
 	};
 
 	return (
