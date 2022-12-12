@@ -47,3 +47,30 @@ export const YellowMediumButton = styled(GreenMediumButton)`
 		background-color: ${(props: StyledTheme) => props.theme.colors.lightYellow};
 	}
 `;
+
+export const MenuPanelButton = styled.button`
+	display: flex;
+	width: 100%;
+	color: ${(props: StyledTheme) => props.theme.colors.lightBlue};
+	font-size: ${(props: StyledTheme) =>
+		props.theme.fontSizes.mediumDevices.medium};
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	transition: all 0.5s;
+	padding: 2px;
+	border-radius: 8px;
+	font-family: Montserrat;
+
+	:hover,
+	:focus {
+		color: ${(props: StyledTheme) => props.theme.colors.green};
+		cursor: pointer;
+		background-color: ${(props: StyledTheme) =>
+			props.theme.colors.backgroundBlue};
+		font-weight: bold;
+	}
+`;

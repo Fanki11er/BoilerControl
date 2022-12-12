@@ -18,6 +18,10 @@ export const theme: Theme = {
 		mediumDevices: {
 			normal: "1em",
 			medium: "1.2em",
+			mediumLarge: "1.4em",
+			large: "1.6em",
+			veryLarge: "2.2em",
+			enormous: "5em",
 		},
 		largeDevices: {},
 	},
@@ -50,6 +54,10 @@ export type Theme = {
 		mediumDevices: {
 			normal: string;
 			medium: string;
+			mediumLarge: string;
+			large: string;
+			veryLarge: string;
+			enormous: string;
 		};
 		largeDevices: {};
 	};

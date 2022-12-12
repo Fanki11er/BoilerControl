@@ -1,4 +1,11 @@
+import { useContext } from "react";
+import { BoilerContext } from "../../../Providers/BoilerProvider/BoilerProvider";
+import BoilerAlarmsStateInfoPanel from "../../Molecules/BoilerAlarmsStatusInfo/BoilerAlarmsStatusInfo";
+import BoilerMenuPanel from "../../Molecules/BoilerMenuPanel/BoilerMenuPanel";
+import BoilerWorkStateInfoPanel from "../../Molecules/BoilerWorkStateInfoPanel/BoilerWorkStateInfoPanel";
 import DefaultBoilerInfoPanel from "../../Molecules/DefaultBoilerInfoPanel/DefaultBoilerInfoPamel";
+import LargeLoader from "../../Molecules/LargeLoader/LargeLoader";
+
 import {
 	BoilerInfoHeader,
 	BoilerInfoWrapper,
@@ -6,24 +13,48 @@ import {
 } from "./BoilerInfo.styles";
 
 const BoilerInfo = () => {
+	const { boilerParameters, selectedBoilerId, error, isLoading } =
+		useContext(BoilerContext);
+
 	return (
 		<BoilerInfoWrapper>
-			<BoilerInfoHeader>Boiler: B1</BoilerInfoHeader>
-			<BoilersInfoPanelsWrapper>
-				<DefaultBoilerInfoPanel
-					label={"Outside temperature"}
-					value={-1}
-					units={"C"}
-				/>
-				<DefaultBoilerInfoPanel
-					label={"Boiler temperature"}
-					value={7}
-					units={"C"}
-				/>
-				<DefaultBoilerInfoPanel label={"Fan speed"} value={100} units={"%"} />
-				<DefaultBoilerInfoPanel label={"Fuel stream (Kg/h)"} value={0} />
-				<DefaultBoilerInfoPanel label={"Fuel level"} value={100} units={"%"} />
-			</BoilersInfoPanelsWrapper>
+			{isLoading && <LargeLoader />}
+			{error && <>Error</>}
+
+			{boilerParameters && !isLoading && !error && (
+				<>
+					<BoilerInfoHeader>{`Boiler: ${selectedBoilerId}`}</BoilerInfoHeader>
+					<BoilersInfoPanelsWrapper>
+						<BoilerWorkStateInfoPanel status={boilerParameters.currentStatus} />
+						<DefaultBoilerInfoPanel
+							label={"Outside temperature"}
+							value={boilerParameters.currentOutsideTemperature}
+							units={"C"}
+						/>
+						<DefaultBoilerInfoPanel
+							label={"Boiler temperature"}
+							value={boilerParameters.currentTemperature}
+							units={"C"}
+						/>
+						<DefaultBoilerInfoPanel
+							label={"Fan speed"}
+							value={boilerParameters.currentFanSpeed}
+							units={"%"}
+						/>
+						<DefaultBoilerInfoPanel
+							label={"Fuel stream (Kg/h)"}
+							value={boilerParameters.currentFuelStream}
+						/>
+						<DefaultBoilerInfoPanel
+							label={"Fuel level"}
+							value={boilerParameters.currentFuelLevel}
+							units={"%"}
+						/>
+						<BoilerAlarmsStateInfoPanel alarm={boilerParameters.alarm} />
+						<BoilerMenuPanel status={boilerParameters.currentStatus} />
+					</BoilersInfoPanelsWrapper>
+				</>
+			)}
 		</BoilerInfoWrapper>
 	);
 };

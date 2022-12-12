@@ -4,5 +4,6 @@ export const routes = {
 	login: "/Login",
 	boilersList: "/List",
 	controlPanel: "/Panel",
-	addBoiler: "AddBoiler",
+	addBoiler: "/AddBoiler",
+	settings: "/Settings",
 };

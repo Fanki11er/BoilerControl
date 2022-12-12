@@ -13,7 +13,7 @@ export const BoilerContext = createContext({
 	handleGetBoilerSettings: (): Promise<any> | null => {
 		return null;
 	},
-	handleSelectBoiler: (boilerId: string) => {},
+	handleSelectBoiler: (boilerId: string | null) => {},
 	handleGetBoilersList: (userId: number): Promise<any> | null => {
 		return null;
 	},
@@ -22,6 +22,7 @@ export const BoilerContext = createContext({
 	error: "",
 	isLoading: false,
 	boilersList: [] as string[],
+	selectedBoilerId: "" as string | null,
 });
 
 type BoilerStatus = BoilerInfo | null;
@@ -48,7 +49,7 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
-	const handleSelectBoiler = (boilerId: string) => {
+	const handleSelectBoiler = (boilerId: string | null) => {
 		setBoilerParameters(null);
 		setSelectedBoilerId(boilerId);
 	};
@@ -61,10 +62,14 @@ const BoilerProvider = (props: PropsWithChildren) => {
 				})
 				.then((response: AxiosResponse) => {
 					const boilerParameters = response.data as BoilerStatus;
+					setIsLoading(false);
 
 					setBoilerParameters(boilerParameters);
 				})
-				.catch(() => setError("Error loading params"));
+				.catch(() => {
+					setError("Error loading params");
+					setIsLoading(false);
+				});
 			//! Add Error info
 		}
 	};
@@ -154,7 +159,9 @@ const BoilerProvider = (props: PropsWithChildren) => {
 
 	useEffect(() => {
 		let interval: NodeJS.Timer;
+
 		if (selectedBoilerId) {
+			setIsLoading(true);
 			interval = setInterval(() => {
 				handleChangeParameters();
 			}, 500);
@@ -178,6 +185,7 @@ const BoilerProvider = (props: PropsWithChildren) => {
 		error,
 		isLoading,
 		boilersList,
+		selectedBoilerId,
 	};
 
 	return (

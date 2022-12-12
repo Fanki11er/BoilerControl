@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { StyledTheme } from "../../../GlobalStyles/theme";
 
 export const BoilerInfoWrapper = styled.section`
-	width: 80%;
+	width: 88%;
+	min-height: 80vh;
 	display: grid;
 	grid-template-columns: 100%;
 	grid-template-rows: 50px auto;
@@ -29,7 +30,6 @@ export const BoilersInfoPanelsWrapper = styled.div`
 	column-gap: 30px;
 	flex-flow: wrap row;
 	border-radius: 15px;
-	border: 2px solid ${(props: StyledTheme) => props.theme.colors.green};
 	padding: 50px;
 	justify-content: center;
 `;

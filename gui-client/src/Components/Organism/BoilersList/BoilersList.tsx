@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useBoilers from "../../../Hooks/useBoilers";
 import { routes } from "../../../Routes/routes";
@@ -12,15 +13,24 @@ import {
 
 const BoilersList = () => {
 	const { addBoiler, controlPanel } = routes;
-	const { boilersList, isLoading, error } = useBoilers();
+	const { boilersList, isLoading, error, handleSelectBoiler } = useBoilers();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		handleSelectBoiler(null);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const renderBoilersListElements = (boilersList: string[]) => {
 		return boilersList.map((boiler) => {
 			return (
 				<BoilersListElement
 					key={boiler}
-					onClick={() => navigate(controlPanel)}
+					onClick={() => {
+						handleSelectBoiler(boiler);
+						navigate(controlPanel);
+					}}
 				>{`Boiler: ${boiler}`}</BoilersListElement>
 			);
 		});
