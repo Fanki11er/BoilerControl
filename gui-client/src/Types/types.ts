@@ -37,3 +37,14 @@ export type BoilerSettings = {
 		fuelStreamTime: number;
 	};
 };
+
+export type FlatBoilerSettings = {
+	desiredTemperature: number;
+	boilerHysteresis: number;
+	fanSpeed: number;
+	fanSpeedInSupervision: number;
+	supervisionWaitingTime: number;
+	fuelStream: number;
+	fuelBreakTime: number;
+	fuelStreamTime: number;
+};

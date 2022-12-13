@@ -4,12 +4,17 @@ import axios from "../../Api/axios";
 import { apiEndpoints } from "../../Api/endpoints";
 import useUser from "../../Hooks/useUser";
 
-import { BoilerInfo, BoilerSettings, PanelOptions } from "../../Types/types";
+import {
+	BoilerInfo,
+	BoilerSettings,
+	FlatBoilerSettings,
+	PanelOptions,
+} from "../../Types/types";
 
 export const BoilerContext = createContext({
 	boilerParameters: null as BoilerStatus,
 	handleBoilerControl: (status: PanelOptions) => {},
-	handleSettingsChange: (settings: any) => {},
+	handleSettingsChange: (settings: FlatBoilerSettings) => {},
 	handleGetBoilerSettings: (): Promise<any> | null => {
 		return null;
 	},
@@ -86,7 +91,7 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			.finally(() => setIsLoading(false));
 	};
 
-	const handleSettingsChange = (settings: any) => {
+	const handleSettingsChange = (settings: FlatBoilerSettings) => {
 		setIsLoading(true);
 		axios
 			.post(setSettings, {
