@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DefaultViewWrapper } from "../../Components/Atoms/DefaultViewWrapper/DefaultViewWrapper";
+import AdvancedSettingsForm from "../../Components/Molecules/AdvancedSettingsForm/AdvancedSettingsForm";
 import BasicSettingsForm from "../../Components/Molecules/BasicSettingsForm/BasicSettingsForm";
 import LargeLoader from "../../Components/Molecules/LargeLoader/LargeLoader";
 import useBoilers from "../../Hooks/useBoilers";
@@ -29,13 +30,22 @@ const SettingsView = () => {
 		<DefaultViewWrapper>
 			{error && <div>Error</div>}
 			{isLoading && <LargeLoader />}
-			{currentSettings && !error && !isLoading && (
-				<BasicSettingsForm
-					boilerSettings={currentSettings}
-					isActive={isActive}
-					handleToggleActive={toggleIsActive}
-				/>
-			)}
+			{currentSettings &&
+				!error &&
+				!isLoading &&
+				(isActive ? (
+					<BasicSettingsForm
+						boilerSettings={currentSettings}
+						isActive={isActive}
+						handleToggleActive={toggleIsActive}
+					/>
+				) : (
+					<AdvancedSettingsForm
+						boilerSettings={currentSettings}
+						isActive={!isActive}
+						handleToggleActive={toggleIsActive}
+					/>
+				))}
 		</DefaultViewWrapper>
 	);
 };
