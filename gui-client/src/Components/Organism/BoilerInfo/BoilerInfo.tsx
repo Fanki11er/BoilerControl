@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { BoilerContext } from "../../../Providers/BoilerProvider/BoilerProvider";
+import BigError from "../../Molecules/BigError/BigError";
 import BoilerAlarmsStateInfoPanel from "../../Molecules/BoilerAlarmsStatusInfo/BoilerAlarmsStatusInfo";
 import BoilerMenuPanel from "../../Molecules/BoilerMenuPanel/BoilerMenuPanel";
 import BoilerWorkStateInfoPanel from "../../Molecules/BoilerWorkStateInfoPanel/BoilerWorkStateInfoPanel";
@@ -19,7 +20,7 @@ const BoilerInfo = () => {
 	return (
 		<BoilerInfoWrapper>
 			{isLoading && <LargeLoader />}
-			{error && <>Error</>}
+			{error && <BigError error={error} />}
 
 			{boilerParameters && !isLoading && !error && (
 				<>

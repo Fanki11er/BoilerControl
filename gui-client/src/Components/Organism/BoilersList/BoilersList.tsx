@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useBoilers from "../../../Hooks/useBoilers";
 import { routes } from "../../../Routes/routes";
+import BigError from "../../Molecules/BigError/BigError";
 import Loader from "../../Molecules/Loader/Loader";
-import LoadingError from "../../Molecules/LoadingError/LoadingError";
 import {
 	BoilersListElement,
 	BoilersListHeader,
@@ -36,7 +36,7 @@ const BoilersList = () => {
 		});
 	};
 	return error ? (
-		<LoadingError />
+		<BigError error={error} />
 	) : isLoading ? (
 		<Loader />
 	) : (

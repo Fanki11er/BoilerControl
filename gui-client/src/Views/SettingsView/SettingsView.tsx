@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { DefaultViewWrapper } from "../../Components/Atoms/DefaultViewWrapper/DefaultViewWrapper";
 import AdvancedSettingsForm from "../../Components/Molecules/AdvancedSettingsForm/AdvancedSettingsForm";
 import BasicSettingsForm from "../../Components/Molecules/BasicSettingsForm/BasicSettingsForm";
+import BigError from "../../Components/Molecules/BigError/BigError";
 import LargeLoader from "../../Components/Molecules/LargeLoader/LargeLoader";
 import useBoilers from "../../Hooks/useBoilers";
 import { BoilerSettings } from "../../Types/types";
@@ -28,7 +29,7 @@ const SettingsView = () => {
 
 	return (
 		<DefaultViewWrapper>
-			{error && <div>Error</div>}
+			{error && <BigError error={error} />}
 			{isLoading && <LargeLoader />}
 			{currentSettings &&
 				!error &&
