@@ -62,7 +62,7 @@ app.post("/GetParams", async (req, res) => {
 		}
 	}
 
-	res.sendStatus(400);
+	res.sendStatus(404);
 });
 
 app.post("/SetStatus", async (req, res) => {
@@ -72,7 +72,7 @@ app.post("/SetStatus", async (req, res) => {
 		const index = findBoilerById(id);
 		if (index >= 0) {
 			boilers[index].changeStatus(status);
-			res.sendStatus(200);
+			res.sendStatus(202);
 			return;
 		}
 	}
@@ -129,6 +129,7 @@ app.post("/AddBoiler", async (req, res) => {
 	if (id && boilerId) {
 		if (base.addNewUserBoiler(id, boilerId)) {
 			boilers.push(new Boiler(boilerId));
+			res.sendStatus(201);
 			return;
 		}
 	}
@@ -137,5 +138,3 @@ app.post("/AddBoiler", async (req, res) => {
 });
 
 server.listen(8000, () => {});
-
-//{"userSettings":{"desiredTemperature":70,"boilerHysteresis":5},"advancedSettings":{"fanSpeed":100,"fanSpeedInSupervision":50,"supervisionWaitingTime":70,"fuelStream":15,"fuelBreakTime":30,"fuelStreamTime":10}}

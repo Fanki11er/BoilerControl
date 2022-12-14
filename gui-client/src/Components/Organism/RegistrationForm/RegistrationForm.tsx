@@ -69,7 +69,7 @@ const RegistrationForm = () => {
 					navigate(boilersList);
 				})
 				.catch((e: AxiosError) => {
-					setError(e.message);
+					setError(`Registration failed: ${e.message}`);
 				});
 		}
 		setIsConnecting(false);

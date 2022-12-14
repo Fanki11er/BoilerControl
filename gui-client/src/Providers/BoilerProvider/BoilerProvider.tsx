@@ -118,21 +118,6 @@ const BoilerProvider = (props: PropsWithChildren) => {
 			.finally(() => setIsLoading(false));
 	};
 
-	/*const handleGetBoilersList = async (userId: number) => {
-		setIsLoading(true);
-		return await axios
-			.post(getBoilersList, {
-				id: userId,
-			})
-			.then((response: AxiosResponse) => {
-				return response.data as string[];
-			})
-			.catch(() => {
-				setError("Get boilers list error");
-			})
-			.finally(() => setIsLoading(false));
-	};*/
-
 	const handleGetBoilersList = async (userId: number) => {
 		setIsLoading(true);
 		await axios
@@ -150,14 +135,23 @@ const BoilerProvider = (props: PropsWithChildren) => {
 	};
 
 	const handleAddBoiler = (userId: number, boilerId: string) => {
+		setError("");
+		if (boilerId === "") {
+			setError("Id field is required");
+
+			return;
+		}
 		setIsLoading(true);
 		axios
 			.post(addBoiler, {
 				id: userId,
 				boilerId,
 			})
+			.then(() => {
+				handleGetBoilersList(userId);
+			})
 			.catch(() => {
-				setError("Get boilers list error");
+				setError("Add boiler error");
 			})
 			.finally(() => setIsLoading(false));
 	};

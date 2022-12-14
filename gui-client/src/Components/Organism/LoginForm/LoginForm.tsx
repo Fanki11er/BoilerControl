@@ -51,7 +51,7 @@ const LoginForm = () => {
 				navigate(boilersList);
 			})
 			.catch((e: AxiosError) => {
-				setError(e.message);
+				setError(`Login failed: ${e.message}`);
 			});
 		setIsConnecting(false);
 	};
