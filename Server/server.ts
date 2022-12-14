@@ -2,6 +2,7 @@ import express from "express";
 import { Boiler } from "./Class/Boiler/Boiler";
 import { Database } from "./Class/Database/Database";
 import http from "http";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { PanelOptions } from "./Types/Types";
 import { BoilerSettings } from "./Class/BoilerSettings/BoilerSettings";
@@ -13,6 +14,7 @@ const server = http.createServer(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const boilers: Boiler[] = [];
 
@@ -60,7 +62,7 @@ app.post("/GetParams", async (req, res) => {
 		}
 	}
 
-	res.sendStatus(400);
+	res.sendStatus(404);
 });
 
 app.post("/SetStatus", async (req, res) => {
@@ -70,7 +72,7 @@ app.post("/SetStatus", async (req, res) => {
 		const index = findBoilerById(id);
 		if (index >= 0) {
 			boilers[index].changeStatus(status);
-			res.sendStatus(200);
+			res.sendStatus(202);
 			return;
 		}
 	}
@@ -127,6 +129,7 @@ app.post("/AddBoiler", async (req, res) => {
 	if (id && boilerId) {
 		if (base.addNewUserBoiler(id, boilerId)) {
 			boilers.push(new Boiler(boilerId));
+			res.sendStatus(201);
 			return;
 		}
 	}
